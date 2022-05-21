@@ -35,6 +35,11 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="blob", nullable=true)
+     */
+    private $imagen;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,5 +127,17 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getImagen()
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen($imagen): self
+    {
+        $this->imagen = $imagen;
+
+        return $this;
     }
 }

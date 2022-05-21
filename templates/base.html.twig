@@ -20,7 +20,7 @@
                 <div class="col-2 text-start">
                     <div class="row d-flex align-items-center">
                         <div class="col-6">
-                            <span id="prueba" class="prueba">PoliCloud</span>
+                            <a href="{{ path('app_inicio') }}" id="prueba" class="prueba text-primary text-decoration-none">PoliCloud</a>
                         </div>
                         <div class="col-6">
                             <!-- Button trigger modal BUSCAR -->
@@ -36,7 +36,7 @@
                             <div class="modal fade" id="modalBuscar" tabindex="-1" aria-labelledby="modalBuscarLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-content border border-primary">
                                         <div class="modal-body">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control"
@@ -57,8 +57,8 @@
                     <div class="row justify-content-center">
                         <div class="col-2 text-end">
                             <a id="pointImagen" class="point-imagen link-secondary">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-circle-fill"
-                                    viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                    class="bi bi-circle-fill dots-size" viewBox="0 0 16 16">
                                     <circle cx="8" cy="8" r="8" />
                                 </svg>
                             </a>
@@ -66,7 +66,7 @@
                         <div class="col-2 text-center">
                             <a id="pointMusica" class="point-musica link-dark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                    class="bi bi-circle-fill dots-size" viewBox="0 0 16 16">
                                     <circle cx="8" cy="8" r="8" />
                                 </svg>
                             </a>
@@ -74,7 +74,7 @@
                         <div class="col-2 text-start">
                             <a id="pointVideo" class="point-video link-light">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                    class="bi bi-circle-fill dots-size" viewBox="0 0 16 16">
                                     <circle cx="8" cy="8" r="8" />
                                 </svg>
                             </a>
@@ -98,7 +98,7 @@
                     <div class="modal fade mt-5" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
-                            <div class="modal-content">
+                            <div class="modal-content border border-primary">
                                 <div class="modal-header">
                                     <h5 class="modal-title text-primary">PoliCloud</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -106,8 +106,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- <div class="input-group mb-3"> AGRUPA FORM -->
-                                    <p class="text-black">Inicia sesión con tu cuenta o <a href="{{ path('app_singin') }}"
-                                            class="text-primary">Regístrate</a></p>
+                                    <p class="text-black">Inicia sesión con tu cuenta o <a
+                                            href="{{ path('app_singin') }}" class="text-primary">Regístrate</a></p>
                                     <input type="text" class="form-control mb-1" placeholder="Correo electrónico"
                                         aria-label="Escribe tu correo electrónico" aria-describedby="button-addon2">
                                     <input type="password" class="form-control mb-3" placeholder="Contraseña"
@@ -126,14 +126,20 @@
             </div>
         </div>
     </header>
-    <div class="b-base">
-        {% block inicio %}{% endblock %}
-    </div>
 
-    {% block body %}{% endblock %}
+    <main class="b-base">
+        <div class="container bg-white py-3">
+            {% block cuerpo %}{% endblock %}
+        </div>
+    </main>
 
-    <footer class="f-base">
-        ETOY DORAMION
+    <footer class="f-base bg-white container mb-0">
+        <hr class="m-0 mb-3">
+        <div class="row">
+            <div class="col text-center">
+                PoliCloud (Proyecto TFG) - Javier Prima Margiotta
+            </div>
+        </div>
     </footer>
 
 

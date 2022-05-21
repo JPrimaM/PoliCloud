@@ -1,5 +1,6 @@
 @import './colores.scss';
 @import './inicio/inicio.scss';
+@import './bootstrap.scss';
 
 
 
@@ -37,11 +38,6 @@ ESTRUCTURA CSS POR ETIQUETA
     border-radius: 10px;
 }
 
-.flex_end {
-    display: flex;
-    justify-content: end;
-}
-
 
 /* PUNTO VERDE - IMAGEN */
 .point-imagen {
@@ -75,11 +71,41 @@ ESTRUCTURA CSS POR ETIQUETA
     height: 50px;
 }
 
-.b-base {
-    height: calc(100vh - 45px - 50px);
+/* .b-base {
+    min-height: calc(100vh - 45px - 50px);
+} */
+
+.singin {
+    display: absolute;
 }
 
 
 body {
     background-color: rgb(219, 219, 219);
 }
+
+/*** CLASES AUXILIARES ***/
+
+.flex_end {
+    display: flex;
+    justify-content: end;
+}
+
+.bg-primary-opacity-banner {
+    background-color: #53535387;
+}
+
+.height-20 {
+    height: 16px;
+}
+
+.fsize-15 {
+    font-size: 15px;
+}
+
+.text-decoration-none {
+    text-decoration: none;
+}
+
+
+/*** FIN CLASES AUXILIARES ***/

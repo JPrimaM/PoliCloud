@@ -42,10 +42,10 @@ class AccesoController extends AbstractController
      */
     public function singin(UserPasswordHasherInterface $passwordHasher, Request $request, EntityManagerInterface $em): Response
     {
-
         $usuario = $this->getUser();
 
         if (!$usuario) {
+
             $usuario = new Usuario();
             $form = $this->createForm(SinginType::class, $usuario);
             $form->handleRequest($request);
@@ -58,6 +58,8 @@ class AccesoController extends AbstractController
                     $form->get('password')->getData()
                 );
                 $usuario->setPassword($hashedPassword);
+                $imagen = $form->get("imagen")->getData();
+                $usuario->setImagen(file_get_contents($imagen)); 
 
                 try {
                     $em->persist($usuario);
