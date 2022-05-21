@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+{% block inicio %}
+
+<div class="container p-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="row my-1">
+                <div class="col-4 m-0 p-0">
+                    <div class="card bg-dark text-secondary border-0 mx-1">
+                        {# <a href="{{ path('app_imagen') }}"> #}
+                            <img src="{{ asset('img/imagen/imagen_banner.jpg') }}" class="card-img cards-inicio w-100 h-100"
+                                alt="Imágen">
+                            <div class="card-img-overlay">
+                                <h5 class="card-title">Imágenes</h5>
+                                <p class="card-text">Sube toda tu colección de fotografía, imágenes 3D...</p>
+                                <p class="card-text">Me come slas tetas</p>
+                            </div>
+                        {# </a> #}
+                    </div>
+                </div>
+                <div class="col-4 m-0 p-0">
+                    <div class="card bg-dark text-dark border-0 mx-1 h-100">
+                        {# <a href="{{ path('app_musica') }}"> #}
+                            <img src="{{ asset('img/musica/musica_banners.jpg') }}" class="card-img cards-inicio w-100 h-100"
+                                alt="Música">
+                            <div class="card-img-overlay">
+                                <h5 class="card-title">Imágenes</h5>
+                                <p class="card-text">Sube toda tu colección de fotografía, imágenes 3D...</p>
+                                <p class="card-text">Me come slas tetas</p>
+                            </div>
+                        {# </a> #}
+                    </div>
+                </div>
+                <div class="col-4 m-0 p-0">
+                    <div class="card bg-dark text-light border-0 mx-1">
+                        {# <a href="{{ path('app_video') }}"> #}
+                            <img src="{{ asset('img/imagen/imagen_banner.jpg') }}" class="card-img cards-inicio w-100 h-100"
+                                alt="Vídeo">
+                            <div class="card-img-overlay">
+                                <h5 class="card-title">Imágenes</h5>
+                                <p class="card-text">Sube toda tu colección de fotografía, imágenes 3D...</p>
+                                <p class="card-text">Me come slas tetas</p>
+                            </div>
+                        {# </a> #}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container p-1">
+    <div class="row px-0 ">
+        <div class="col px-0 mt-4">
+            <p><span class="h4 me-2">Destacados</span>Lo último en PoliCloud</p>
+            <div class="row text-center">
+                <div class="col-4">
+                    <h5>LogoImg</h5>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0">
+                                  <div class="col-md-4">
+                                    <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start" alt="Video destacado 1">
+                                  </div>
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">NomArtista</h5>
+                                      <p class="card-text">NomCanción.</p>
+                                      <p class="card-text"><small class="text-muted">NumMegusta</small></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <h5>LogoMus</h5>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0">
+                                  <div class="col-md-4">
+                                    <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start" alt="Video destacado 1">
+                                  </div>
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">NomArtista</h5>
+                                      <p class="card-text">NomCanción.</p>
+                                      <p class="card-text"><small class="text-muted">NumMegusta</small></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <h5>LogoVid</h5>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0">
+                                  <div class="col-md-4">
+                                    <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start" alt="Video destacado 1">
+                                  </div>
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">NomArtista</h5>
+                                      <p class="card-text">NomCanción.</p>
+                                      <p class="card-text"><small class="text-muted">NumMegusta</small></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

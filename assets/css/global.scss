@@ -1,0 +1,85 @@
+@import './colores.scss';
+@import './inicio/inicio.scss';
+
+
+
+
+/* 
+ESTRUCTURA CSS POR ETIQUETA
+- BLOQUE 1: COLORES
+- BLOQUE 2: TAMAÑOS
+- BLOQUE 3: AJUSTES
+*/
+
+#cardImg {
+    border: 2px solid;
+    border-color: $gris-principal;
+}
+
+
+/*** HEADER ***/
+.h-base {
+    background-color: $gris-principal;
+    color: $blanco;
+
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+}
+
+.btn-header {
+    background-color: $gris-secundario;
+    border-color: $blanco;
+    color: $blanco;
+
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.flex_end {
+    display: flex;
+    justify-content: end;
+}
+
+
+/* PUNTO VERDE - IMAGEN */
+.point-imagen {
+    position: absolute;
+    z-index: 1;
+
+    height: 16px;
+    width: 16px;
+}
+
+/* PUNTO AMARIILLO - MUSICA */
+.point-musica {
+    position: absolute;
+    z-index: 1;
+
+    height: 16px;
+    width: 16px;
+}
+
+/* PUNTO LILA - VIDEO */
+.point-video {
+    position: absolute;
+    z-index: 1;
+
+    height: 16px;
+    width: 16px;
+}
+/*** FIN HEADER ***/
+
+.f-base {
+    height: 50px;
+}
+
+.b-base {
+    height: calc(100vh - 45px - 50px);
+}
+
+
+body {
+    background-color: rgb(219, 219, 219);
+}

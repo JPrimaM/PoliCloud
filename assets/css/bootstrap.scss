@@ -1,0 +1,8 @@
+@import './colores.scss';
+
+$primary:   $rojo-principal;
+$secondary: $verde-bola;
+$dark:      $amarillo-bola;
+$light:     $lila-bola;
+
+@import '~bootstrap/scss/bootstrap';
