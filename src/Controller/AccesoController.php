@@ -67,7 +67,7 @@ class AccesoController extends AbstractController
                 }
                 return $this->redirectToRoute('app_inicio');
             }
-            return $this->render('acceso/singin.html.twig', [
+            return $this->render('./acceso/singin.html.twig', [
                 'controller_name' => 'SinginController',
                 'form' => $form->createView()
             ]);
