@@ -20,7 +20,8 @@
                 <div class="col-2 text-start">
                     <div class="row d-flex align-items-center">
                         <div class="col-6">
-                            <a href="{{ path('app_inicio') }}" id="prueba" class="prueba text-primary text-decoration-none">PoliCloud</a>
+                            <a href="{{ path('app_inicio') }}" id="prueba"
+                                class="prueba text-primary text-decoration-none">PoliCloud</a>
                         </div>
                         <div class="col-6">
                             <!-- Button trigger modal BUSCAR -->
@@ -82,6 +83,7 @@
                     </div>
                 </div>
                 <div class="col-2 flex_end">
+                    {% if not is_granted('ROLE_RESIDENTE') %}
                     <!-- Button trigger modal LOGIN -->
                     <button type="button" class="btn d-flex justify-content-center btn-header" data-bs-toggle="modal"
                         data-bs-target="#modalLogin">
@@ -108,22 +110,50 @@
                                     <!-- <div class="input-group mb-3"> AGRUPA FORM -->
                                     <p class="text-black">Inicia sesión con tu cuenta o <a
                                             href="{{ path('app_singin') }}" class="text-primary">Regístrate</a></p>
-                                    <input type="text" class="form-control mb-1" placeholder="Correo electrónico"
-                                        aria-label="Escribe tu correo electrónico" aria-describedby="button-addon2">
-                                    <input type="password" class="form-control mb-3" placeholder="Contraseña"
-                                        aria-label="Escribe tu contraseña" aria-describedby="button-addon2">
-                                    <div class="flex_end">
-                                        <button class="btn btn-outline-primary" type="button"
-                                            id="button-addon2">Entrar</button>
-                                    </div>
-                                    <!-- </div> -->
-
+                                    <form action="{{ path('app_login') }}" method="post" class="text-center">
+                                        <input type="text" class="form-control mb-1" placeholder="Correo electrónico"
+                                            aria-label="Escribe tu correo electrónico" aria-describedby="button-addon2"
+                                            name="_username">
+                                        <input type="password" class="form-control mb-3" placeholder="Contraseña"
+                                            aria-label="Escribe tu contraseña" aria-describedby="button-addon2"
+                                            name="_password">
+                                        <div class="flex_end">
+                                            <button class="btn btn-outline-primary" type="submit"
+                                                id="button-addon2">Entrar</button>
+                                    </form>
                                 </div>
+                                <!-- </div> -->
+
                             </div>
                         </div>
                     </div>
+                    {% else %}
+                        {% if imagen == null %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-shield-shaded" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M8 14.933a.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067v13.866zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z" />
+                        </svg>
+                        {% else %}
+                        <img src="data:image/png;base64,{{ imagen }}" alt="mdo" width="30" height="30"
+                            class="rounded-circle">
+                        {% endif %}
+                        <a href="{{ path('app_inicio') }}" class="text-primary text-decoration-none ms-2 me-3"
+                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                            aria-controls="offcanvasScrolling">{{ apodo }}</a>
+                        <a href="{{ path('app_logout') }}" type="button" class="btn d-flex align-items-center btn-header">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                                <path fill-rule="evenodd"
+                                    d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                            </svg>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
+        </div>
         </div>
     </header>
 
@@ -141,6 +171,75 @@
             </div>
         </div>
     </footer>
+
+
+    {% if is_granted('ROLE_RESIDENTE') %}
+    <!-- LATERAL CANVAS -->
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+        id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Panel de control</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h3> {% if imagen == null %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-shield-shaded" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M8 14.933a.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067v13.866zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z" />
+                </svg>
+                {% else %}
+                <img src="data:image/png;base64,{{ imagen }}" alt="mdo" width="50" height="50" class="rounded-circle">
+                {% endif %}{{ apodo }}
+            </h3>
+            <p class="text-muted">Echa un vistazo a tu perfil</p>
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalSubirImagen">
+                Subir imágen
+            </button>
+        </div>
+    </div>
+    <!-- FIN LATERAL CANVAS -->
+    {% endif %}
+
+    <!-- MODAL SUBIR IMAGEN -->
+    <div class="modal fade" id="modalSubirImagen" tabindex="-1" aria-labelledby="modalSubirImagenLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSubirImagenLabel">Subir imágen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted">Escoge la imagen que quieras compartir y dale una descripción.</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control" id="inputGroupFile01">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default" placeholder="Nombre de tu imagen...">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group">
+                                <textarea class="form-control" aria-label="descripción"
+                                    placeholder="Descripción de la imagen..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN MODAL SUBIR IMAGEN -->
 
 
 

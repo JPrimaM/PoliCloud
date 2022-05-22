@@ -18,6 +18,7 @@ class SinginType extends AbstractType
     {
         $builder
             ->add('email', TextType::class)
+            ->add('apodo', TextType::class)
             ->add('password', PasswordType::class)
             ->add('password2', PasswordType::class, array(
                 'mapped' => false

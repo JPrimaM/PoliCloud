@@ -40,6 +40,11 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $imagen;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $apodo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -133,10 +138,22 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->imagen;
     }
-
+    
     public function setImagen($imagen): self
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    public function getApodo(): ?string
+    {
+        return $this->apodo;
+    }
+
+    public function setApodo(string $apodo): self
+    {
+        $this->apodo = $apodo;
 
         return $this;
     }

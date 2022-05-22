@@ -17,6 +17,9 @@ ESTRUCTURA CSS POR ETIQUETA
     border-color: $gris-principal;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
 
 /*** HEADER ***/
 .h-base {
@@ -43,6 +46,7 @@ ESTRUCTURA CSS POR ETIQUETA
 .point-imagen {
     position: absolute;
     z-index: 1;
+    left: calc(50% - 66px);
 
     height: 16px;
     width: 16px;
@@ -52,6 +56,7 @@ ESTRUCTURA CSS POR ETIQUETA
 .point-musica {
     position: absolute;
     z-index: 1;
+    left: calc(50% - 8px);
 
     height: 16px;
     width: 16px;
@@ -61,6 +66,7 @@ ESTRUCTURA CSS POR ETIQUETA
 .point-video {
     position: absolute;
     z-index: 1;
+    left: calc(50% + 48px);
 
     height: 16px;
     width: 16px;
