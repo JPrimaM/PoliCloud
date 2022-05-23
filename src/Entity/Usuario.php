@@ -52,9 +52,15 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $getLikes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Multimedia::class, mappedBy="usuario")
+     */
+    private $multimedia;
+
     public function __construct()
     {
         $this->getLikes = new ArrayCollection();
+        $this->multimedia = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +196,36 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeGetLike(Multimedia $getLike): self
     {
         $this->getLikes->removeElement($getLike);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Multimedia>
+     */
+    public function getMultimedia(): Collection
+    {
+        return $this->multimedia;
+    }
+
+    public function addMultimedia(Multimedia $multimedia): self
+    {
+        if (!$this->multimedia->contains($multimedia)) {
+            $this->multimedia[] = $multimedia;
+            $multimedia->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMultimedia(Multimedia $multimedia): self
+    {
+        if ($this->multimedia->removeElement($multimedia)) {
+            // set the owning side to null (unless already changed)
+            if ($multimedia->getUsuario() === $this) {
+                $multimedia->setUsuario(null);
+            }
+        }
 
         return $this;
     }

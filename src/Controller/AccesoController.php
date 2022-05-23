@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Multimedia;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,6 +10,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Usuario;
+use App\Form\PublicarType;
 use Symfony\Component\Security\Core\Security;
 use App\Form\SinginType;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -29,25 +31,52 @@ class AccesoController extends AbstractController
     /**
      * @Route("/", name="app_inicio")
      */
-    public function inicio(): Response
+    public function inicio(Request $request, EntityManagerInterface $em): Response
     {
+        
         $usuario = $this->security->getUser();
 
         if ($usuario) {
             $rol = $usuario->getRoles();
-
             $apodo = $usuario->getApodo();
+
             if ($usuario->getImagen()) {
                 $imagen = base64_encode(stream_get_contents($usuario->getImagen(), -1, -1));
             } else {
                 $imagen = 0;
             }
 
+            $usuario_repositorio = $em->getRepository(Usuario::class)->findOneBy(array("email" => $usuario->getUserIdentifier()));
+            $multimedia = new Multimedia();
+            $form = $this->createForm(PublicarType::class, $multimedia);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                if ($archivo = $form->get("archivo")->getData()) {
+
+                    $multimedia->setArchivo(file_get_contents($archivo));
+                    $multimedia->setFormato($archivo->guessExtension());
+                    $multimedia->addUsuario($usuario_repositorio);
+                    $usuario_repositorio->addMultimedia($multimedia);
+                }
+
+                try {
+                    $em->persist($multimedia);
+                    $em->persist($usuario_repositorio);
+                    $em->flush();
+                } catch (\Exception $e) {
+                    return new Response("Esto no va, no no no.");
+                }
+                return $this->redirectToRoute('app_inicio');
+            }
+
             if (in_array('ROLE_RESIDENTE', $rol)) {
                 return $this->render('acceso/inicio.html.twig', [
                     'rol' => $rol[0],
                     'apodo' => $apodo,
-                    'imagen' => $imagen
+                    'imagen' => $imagen,
+                    'form' => $form->createView()
                 ]);
             }
         }

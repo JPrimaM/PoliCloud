@@ -49,6 +49,11 @@ class Multimedia
      */
     private $usuarios;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Usuario::class, inversedBy="multimedia")
+     */
+    private $usuario;
+
     public function __construct()
     {
         $this->usuarios = new ArrayCollection();
@@ -142,6 +147,18 @@ class Multimedia
         if ($this->usuarios->removeElement($usuario)) {
             $usuario->removeGetLike($this);
         }
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
 
         return $this;
     }

@@ -128,29 +128,40 @@
                         </div>
                     </div>
                     {% else %}
-                    {% if imagen == 0 %}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                        <path fill-rule="evenodd"
-                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                    </svg>
-                    {% else %}
-                    <img src="data:image/png;base64,{{ imagen }}" alt="mdo" width="30" height="30"
-                        class="rounded-circle">
-                    {% endif %}
-                    <a href="{{ path('app_inicio') }}" class="text-primary text-decoration-none ms-2 me-3"
-                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-                        aria-controls="offcanvasScrolling">{{ apodo }}</a>
-                    <a href="{{ path('app_logout') }}" type="button" class="btn d-flex align-items-center btn-header">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
-                            <path fill-rule="evenodd"
-                                d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
-                        </svg>
-                    </a>
+                            {% if imagen == 0 %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg>
+                            {% else %}
+                            <img src="data:image/png;base64,{{ imagen }}" alt="mdo" width="30" height="30"
+                                class="rounded-circle">
+                            {% endif %}
+                        <div class="dropdown">
+                            <a class="dropdown-toggle text-decoration-none ms-2 me-3" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                {{ apodo }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li> <a type="button" class="dropdown-item" data-bs-toggle="modal"
+                                        data-bs-target="#modalSubirImagen">
+                                        Subir imágen
+                                    </a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                        <a href="{{ path('app_logout') }}" type="button" class="btn d-flex align-items-center btn-header">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                                <path fill-rule="evenodd"
+                                    d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                            </svg>
+                        </a>
                     {% endif %}
                 </div>
             </div>
@@ -200,8 +211,7 @@
             </button>
         </div>
     </div>
-    <!-- FIN LATERAL CANVAS -->
-    {% endif %}
+    <!-- FIN LATERAL CANVAS AHORA PARA PRUEBAS (DESUSO) -->
 
     <!-- MODAL SUBIR IMAGEN -->
     <div class="modal fade" id="modalSubirImagen" tabindex="-1" aria-labelledby="modalSubirImagenLabel"
@@ -213,35 +223,42 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    {{ form_start(form) }}
                     <p class="text-muted">Escoge la imagen que quieras compartir y dale una descripción.</p>
                     <div class="row">
+                    
                         <div class="col-6">
                             <div class="input-group mb-3">
-                                <input type="file" class="form-control" id="inputGroupFile01">
+                                <!-- <input type="file" class="form-control" id="inputGroupFile01"> -->
+                                {{ form_widget(form.archivo, { 'attr': { 'type':'file', 'class':'mb-2 form-control', 'id':'inputGroupFile01' }}) }}
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-default" placeholder="Nombre de tu imagen...">
+                                <!-- <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default" placeholder="Nombre de tu imagen..."> -->
+                                    {{ form_widget(form.nombre, { 'attr': { 'class':'mb-2 form-control', 'placeholder':'Nombre de la publicación' }}) }}
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="input-group">
-                                <textarea class="form-control" aria-label="descripción"
-                                    placeholder="Descripción de la imagen..."></textarea>
+                                <!-- <textarea class="form-control" aria-label="descripción"
+                                    placeholder="Descripción de la imagen..."></textarea> -->
+                                    {{ form_widget(form.descripcion, { 'attr': { 'class':'mb-2 form-control', 'placeholder':'Agrega una descripción...' }}) }}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <!-- <button type="button" class="btn btn-primary">Guardar</button> -->
+                    {{ form_widget(form.submit, { 'attr': { 'class':'mb-2 btn btn-primary' }}) }}
                 </div>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
     <!-- FIN MODAL SUBIR IMAGEN -->
+    {% endif %}
 
 
 
