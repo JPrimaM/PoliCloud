@@ -57,13 +57,11 @@ class AccesoController extends AbstractController
 
                     $multimedia->setArchivo(file_get_contents($archivo));
                     $multimedia->setFormato($archivo->guessExtension());
-                    $multimedia->addUsuario($usuario_repositorio);
-                    $usuario_repositorio->addMultimedia($multimedia);
+                    $multimedia->setUsuario($usuario_repositorio);
                 }
 
                 try {
                     $em->persist($multimedia);
-                    $em->persist($usuario_repositorio);
                     $em->flush();
                 } catch (\Exception $e) {
                     return new Response("Esto no va, no no no.");
