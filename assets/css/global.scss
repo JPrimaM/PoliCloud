@@ -13,8 +13,9 @@ ESTRUCTURA CSS POR ETIQUETA
 */
 
 #cardImg {
-    border: 2px solid;
     border-color: $gris-principal;
+    
+    border: 2px solid;
 }
 
 ::-webkit-scrollbar {

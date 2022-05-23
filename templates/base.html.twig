@@ -85,7 +85,7 @@
                 <div class="col-2 flex_end">
                     {% if not is_granted('ROLE_RESIDENTE') %}
                     <!-- Button trigger modal LOGIN -->
-                    <button type="button" class="btn d-flex justify-content-center btn-header" data-bs-toggle="modal"
+                    <a type="button" class="btn d-flex justify-content-center btn-header" data-bs-toggle="modal"
                         data-bs-target="#modalLogin">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
@@ -94,7 +94,7 @@
                             <path fill-rule="evenodd"
                                 d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
                         </svg>
-                    </button>
+                    </a>
 
                     <!-- Modal LOGIN -->
                     <div class="modal fade mt-5" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel"
@@ -136,10 +136,10 @@
                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                             </svg>
                             {% else %}
-                            <img src="data:image/png;base64,{{ imagen }}" alt="mdo" width="30" height="30"
+                            <img src="data:image/png;base64,{{ imagen }}" alt="mdo" width="28" height="28"
                                 class="rounded-circle">
                             {% endif %}
-                        <div class="dropdown">
+                        <div class="dropdown d-flex align-items-center">
                             <a class="dropdown-toggle text-decoration-none ms-2 me-3" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 {{ apodo }}
