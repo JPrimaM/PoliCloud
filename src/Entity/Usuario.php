@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -44,6 +46,16 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=100)
      */
     private $apodo;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Multimedia::class, inversedBy="usuarios")
+     */
+    private $getLikes;
+
+    public function __construct()
+    {
+        $this->getLikes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -154,6 +166,30 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setApodo(string $apodo): self
     {
         $this->apodo = $apodo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Multimedia>
+     */
+    public function getGetLikes(): Collection
+    {
+        return $this->getLikes;
+    }
+
+    public function addGetLike(Multimedia $getLike): self
+    {
+        if (!$this->getLikes->contains($getLike)) {
+            $this->getLikes[] = $getLike;
+        }
+
+        return $this;
+    }
+
+    public function removeGetLike(Multimedia $getLike): self
+    {
+        $this->getLikes->removeElement($getLike);
 
         return $this;
     }
