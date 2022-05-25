@@ -1,15 +1,14 @@
 {% macro sugerencias() %}
 
 <div class="row px-0 ">
-    <!-- <pre>
-    {# {{ dump(sugeridos_multimedia.sugerenciasAleatorias) }} #}
-    </pre> -->
+
+    {#
     <pre>
-    {{ dump(sugeridos_multimedia.sugerenciasAleatorias) }} 
-    </pre>
+    {{ dump(sugeridos_imagen.sugerenciasAleatorias[0].callable[1]) }}
+    </pre> #}
 
     <div class="col mt-5">
-        <p><span class="h4 ms-1 me-3">Sugerencias</span>Algunas publicacione de los usuarios</p>
+        <p><span class="h4 ms-1 me-3">Sugerencias</span>Algunas publicaciones de los usuarios</p>
         <div class="row text-center">
             <div class="col-4 px-5">
                 <div class="mb-3">
@@ -24,20 +23,20 @@
                         </svg>
                     </a>
                 </div>
-                
-                 {% for multimedia in sugeridos_multimedia %}
+
+                {% for multimedia in sugeridos_imagen.sugerenciasAleatorias[0].callable[1] %}
                 <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start"
-                                    alt="Video destacado 1">
+                            <div class="col-md-4 visor">
+                                <img src="data:image/png;base64,{{ multimedia.archivo }}" alt="IMAGEN"
+                                    class="img-fluid rounded-start">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}
-                                    <p class="fsize-15 mb-0 ms-2">NomCanción</p>
-                                    <p class="fsize-15 mb-0 me-2 text-end text-muted">15</p>
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                    <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</p>
                                 </div>
                             </div>
                         </div>
@@ -58,6 +57,7 @@
                         </svg>
                     </a>
                 </div>
+                {# {% for multimedia in sugeridos_musica.sugerenciasAleatorias[1].callable[1] %}
                 <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
@@ -67,14 +67,16 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">NomArtista
-                                    <p class="fsize-15 mb-0 ms-2">NomCanción</p>
-                                    <p class="fsize-15 mb-0 me-2 text-end text-muted">15</p>
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                    <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null
+                                        %}{{ multimedia.likes }}{% else %}0{% endif %}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %} #}
             </div>
             <div class="col-4 px-5">
                 <div class="mb-3">

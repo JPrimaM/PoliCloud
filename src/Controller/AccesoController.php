@@ -14,8 +14,6 @@ use App\Form\PublicarType;
 use Symfony\Component\Security\Core\Security;
 use App\Form\SinginType;
 use App\Service\SugerenciasService;
-use phpDocumentor\Reflection\Types\Mixed_;
-use Symfony\Bundle\TwigBundle\DependencyInjection\Compiler\TwigEnvironmentPass;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AccesoController extends AbstractController
@@ -36,6 +34,7 @@ class AccesoController extends AbstractController
      */
     public function inicio(Request $request, EntityManagerInterface $em): Response
     {
+        /* echo phpinfo(); */
 
         $usuario = $this->security->getUser();
 
@@ -67,11 +66,12 @@ class AccesoController extends AbstractController
                     $em->persist($multimedia);
                     $em->flush();
                 } catch (\Exception $e) {
-                    return new Response("Esto no va, no no no.");
+                    return new Response("Esto no va, no no no.".$e);
                 }
                 return $this->redirectToRoute('app_inicio');
             }
 
+            
             if (in_array('ROLE_RESIDENTE', $rol)) {
                 return $this->render('acceso/inicio.html.twig', [
                     'rol' => $rol[0],

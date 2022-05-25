@@ -116,3 +116,19 @@ body {
 
 
 /*** FIN CLASES AUXILIARES ***/
+
+
+/*** TAMAÑOS SUGERENCIAS ***/
+
+.visor{
+    max-width: 90px;
+    max-height: 90px;
+    overflow: hidden;
+    img {
+        min-height: 90px;
+        position: relative;
+    }
+    
+}
+
+/*** FIN TAMAÑOS SUGERENCIAS ***/

@@ -18,7 +18,7 @@ class PublicarType extends AbstractType
     {
         $builder
             ->add('archivo', FileType::class, array(
-                "required" => false
+                "required" => true
             ))
             ->add('nombre')
             ->add('descripcion')

@@ -4,78 +4,55 @@ namespace App\Service;
 
 use App\Entity\Multimedia;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Callable_;
 use PhpParser\Node\Stmt\Foreach_;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class SugerenciasService extends AbstractExtension {
+class SugerenciasService extends AbstractExtension
+{
 
     private $em;
-    
 
-    public function __construct(EntityManagerInterface $em) {
+    public function __construct(EntityManagerInterface $em)
+    {
         $this->em = $em;
     }
 
-    public function sugerenciasAleatorias(): array {
-
+    public function sugerenciasAleatorias()
+    {
+        $cantidad = 3;
         $repositorioMultimedia = $this->em->getRepository(Multimedia::class);
 
-        $cantidadMultimedia = $repositorioMultimedia->createQueryBuilder('multimedia')
-                                                    ->select('count(multimedia.id)')
-                                                    ->getQuery()
-                                                    ->getSingleScalarResult();
+        $idsMultimedia = $repositorioMultimedia->createQueryBuilder('multimedia')
+            ->select('multimedia.id')
+            ->getQuery()
+            ->getScalarResult();                // Devuelve array con todos los datos
+            /* ->getSingleScalarResult(); */    // Devuelve un solo valor como string
 
 
-        $numeros = range(1, $cantidadMultimedia);
-        shuffle($numeros);
+        $aleatoriosImagenMultimedia = $repositorioMultimedia    //Muestra las 3 primeras (cambiar)
+            ->createQueryBuilder('multimedia')
+            ->andWhere('multimedia.id IN (:ids)')
+            ->andWhere('multimedia.formato IN (:png)')
+            ->setParameter('ids', $idsMultimedia)
+            ->setParameter('png', 'png')
+            ->setFirstResult(0)
+            ->setMaxResults($cantidad)
+            ->getQuery()
+            ->getResult();
 
-        $aleatoriosIdsMultimedia = array_slice($numeros, 0, 6);
+        shuffle($aleatoriosImagenMultimedia);
 
-        $aleatoriosMultimedia = $repositorioMultimedia->createQueryBuilder('multimedia')
-                                                      ->where('multimedia.id IN (:ids)')
-                                                      ->setParameter('ids', $aleatoriosIdsMultimedia)
-                                                      ->setMaxResults(1)
-                                                      ->getQuery()
-                                                      ->getResult();
+        $aleatoriosImagenMultimediaFinal = [] ;
 
-        $aux = "";
-        foreach ($aleatoriosMultimedia as $aleatorioM) {
-
-                $aux = $aleatorioM;
-            
+        foreach($aleatoriosImagenMultimedia as $aleatoriosImagen) { 
+            $aux = base64_encode(stream_get_contents($aleatoriosImagen->getArchivo(), -1, -1));
+            array_push($aleatoriosImagenMultimediaFinal, $aleatoriosImagen->setArchivo($aux));
         }
-
-
-        return [
-            new TwigFunction('sugeridos_multimedia', [ $this, $aux])
-        ];
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*     public function filaAleatoria($min, $max, $numFilas) {
-        $numbers = range($min, $max);
-        shuffle($numbers);
-
-        return array_slice($numbers, 0, $numFilas);
-    } */
-
     
-
+        return [
+            new TwigFunction('sugeridos_imagen', [$this, ($aleatoriosImagenMultimedia)])
+        ]; 
+    }
 }
-
-?>
