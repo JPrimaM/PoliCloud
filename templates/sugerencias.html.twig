@@ -1,6 +1,13 @@
 {% macro sugerencias() %}
 
 <div class="row px-0 ">
+    <!-- <pre>
+    {# {{ dump(sugeridos_multimedia.sugerenciasAleatorias) }} #}
+    </pre> -->
+    <pre>
+    {{ dump(sugeridos_multimedia.sugerenciasAleatorias) }} 
+    </pre>
+
     <div class="col mt-5">
         <p><span class="h4 ms-1 me-3">Sugerencias</span>Algunas publicacione de los usuarios</p>
         <div class="row text-center">
@@ -17,6 +24,8 @@
                         </svg>
                     </a>
                 </div>
+                
+                 {% for multimedia in sugeridos_multimedia %}
                 <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
@@ -26,25 +35,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">NomArtista
-                                    <p class="fsize-15 mb-0 ms-2">NomCanción</p>
-                                    <p class="fsize-15 mb-0 me-2 text-end text-muted">15</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% for equipo in equipos_lista %}
-                <div class="col">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start"
-                                    alt="Video destacado 1">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">NomArtista
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}
                                     <p class="fsize-15 mb-0 ms-2">NomCanción</p>
                                     <p class="fsize-15 mb-0 me-2 text-end text-muted">15</p>
                                 </div>
