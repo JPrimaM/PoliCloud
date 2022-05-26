@@ -12,13 +12,11 @@
         <div class="row text-center">
             <div class="col-4 px-5">
                 <div class="mb-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
                         <circle cx="8" cy="8" r="8" />
                     </svg>
                     <a class="link-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-circle-fill dots-size" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill dots-size" viewBox="0 0 16 16">
                             <circle cx="8" cy="8" r="8" />
                         </svg>
                     </a>
@@ -28,31 +26,65 @@
                 <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-4 visor">
-                                <img src="data:image/png;base64,{{ multimedia.archivo }}" alt="IMAGEN"
-                                    class="img-fluid rounded-start">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
-                                    <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</p>
+                                <div class="col-md-4 visor">
+                                <a type="button" class="m-0 p-0" data-bs-toggle="modal"
+                                    data-bs-target="#modalVerImagen{{ multimedia.id }}">
+                                    <img src="data:image/png;base64,{{ multimedia.archivo }}" alt="IMAGEN" class="img-fluid rounded-start">
+                                    </a>
                                 </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-2 text-start">
+                                        <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
+                                        <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                        <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</p>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+{# {{ dump(multimedia.usuario.imagen) }} #}
+                {# MODAL IMAGEN #}
+                <div class="modal fade" id="modalVerImagen{{ multimedia.id }}" tabindex="-1" aria-labelledby="modalVerImagenLabel{{ multimedia.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalVerImagenLabel{{ multimedia.id }}">
+                                {{ dump(multimedia.usuario.imagen) }}
+                                {% if multimedia.usuario.imagen %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                        class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                        <path fill-rule="evenodd"
+                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                    </svg>
+                                {% else %}
+                                    <img src="data:image/png;base64,{{ multimedia.usuario.imagen }}" alt="mdo" width="28" height="28"
+                                        class="rounded-circle">
+                                {% endif %}
+                                    {{ multimedia.usuario.apodo }}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="data:image/png;base64,{{ multimedia.archivo }}" alt="IMAGEN" class="img-fluid rounded-start mb-3">
+                                <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                <p class="fsize-15 mb-0 ms-2">{{ multimedia.descripcion }}</p>
+                                <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                {# FIN MODAL IMAGEN #}
                 {% endfor %}
             </div>
             <div class="col-4 px-5">
                 <div class="mb-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
                         <circle cx="8" cy="8" r="8" />
                     </svg>
                     <a class="link-dark">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-circle-fill dots-size" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill dots-size" viewBox="0 0 16 16">
                             <circle cx="8" cy="8" r="8" />
                         </svg>
                     </a>
@@ -80,18 +112,16 @@
             </div>
             <div class="col-4 px-5">
                 <div class="mb-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
                         <circle cx="8" cy="8" r="8" />
                     </svg>
                     <a class="link-light">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-circle-fill dots-size" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill dots-size" viewBox="0 0 16 16">
                             <circle cx="8" cy="8" r="8" />
                         </svg>
                     </a>
                 </div>
-                <div class="col">
+                {# <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4">
@@ -107,9 +137,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> #}
             </div>
         </div>
     </div>
-
     {% endmacro %}

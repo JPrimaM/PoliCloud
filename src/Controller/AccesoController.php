@@ -34,7 +34,6 @@ class AccesoController extends AbstractController
      */
     public function inicio(Request $request, EntityManagerInterface $em): Response
     {
-        /* echo phpinfo(); */
 
         $usuario = $this->security->getUser();
 

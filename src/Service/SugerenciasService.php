@@ -28,31 +28,43 @@ class SugerenciasService extends AbstractExtension
             ->select('multimedia.id')
             ->getQuery()
             ->getScalarResult();                // Devuelve array con todos los datos
-            /* ->getSingleScalarResult(); */    // Devuelve un solo valor como string
+        /* ->getSingleScalarResult(); */    // Devuelve un solo valor como string
 
-
-        $aleatoriosImagenMultimedia = $repositorioMultimedia    //Muestra las 3 primeras (cambiar)
+        $aleatoriosImagenMultimedia = $repositorioMultimedia
             ->createQueryBuilder('multimedia')
             ->andWhere('multimedia.id IN (:ids)')
             ->andWhere('multimedia.formato IN (:png)')
             ->setParameter('ids', $idsMultimedia)
             ->setParameter('png', 'png')
-            ->setFirstResult(0)
-            ->setMaxResults($cantidad)
             ->getQuery()
             ->getResult();
 
+
         shuffle($aleatoriosImagenMultimedia);
 
-        $aleatoriosImagenMultimediaFinal = [] ;
+        $barajaImagenMultimedia = [];
+        $contador = 0;
+        foreach ($aleatoriosImagenMultimedia as $aleatoriosImagen) {
+            if ($contador == $cantidad) {
+                break;
+            } else {
+                $aux = base64_encode(stream_get_contents($aleatoriosImagen->getArchivo(), -1, -1));
+                $aleatoriosImagen->setArchivo($aux);
 
-        foreach($aleatoriosImagenMultimedia as $aleatoriosImagen) { 
-            $aux = base64_encode(stream_get_contents($aleatoriosImagen->getArchivo(), -1, -1));
-            array_push($aleatoriosImagenMultimediaFinal, $aleatoriosImagen->setArchivo($aux));
+
+                /* Coger foto del usuario de la publicacion para mostrarla en el modal */
+                /* $aux2 = base64_encode(stream_get_contents($aleatoriosImagen->getUsuario()->getImagen(), -1, -1));
+                $aleatoriosImagen->getUsuario()->setImagen($aux2); */
+
+                array_push($barajaImagenMultimedia, $aleatoriosImagen);
+            }
+            $contador++;
         }
-    
+
+
+
         return [
-            new TwigFunction('sugeridos_imagen', [$this, ($aleatoriosImagenMultimedia)])
-        ]; 
+            new TwigFunction('sugeridos_imagen', [$this, ($barajaImagenMultimedia)])
+        ];
     }
 }
