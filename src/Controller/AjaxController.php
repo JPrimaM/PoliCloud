@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Security;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Usuario;
 use App\Entity\Multimedia;
+use Symfony\Component\HttpFoundation\Request;
 
 class AjaxController extends AbstractController
 {
@@ -25,22 +26,28 @@ class AjaxController extends AbstractController
     /**
      * @Route("dar-like", name="app_darLike")
      */
-    public function darLike(EntityManagerInterface $em)
+    public function darLike(Request $request, EntityManagerInterface $em)
     {
         $usuario = $this->security->getUser();
 
         if ($usuario) {
-            $idMultimedia = $_GET["multimedia_id"];
+
+            //Recoger GET
+            $idMultimedia=$request->query->get("multimedia_id");
+            //var_dump("GET:".$var);
+            //$idMultimedia = $_GET["multimedia_id"];
 
             $multimedia_repositorio = $em->getRepository(Multimedia::class)->findOneBy(array("id" => $idMultimedia));
             $usuario_repositorio = $em->getRepository(Usuario::class)->findOneBy(array("email" => $usuario->getUserIdentifier()));
 
             $multimedia_repositorio->addUsuario($usuario_repositorio);
-            $usuario_repositorio->addGetLike($multimedia_repositorio);
+            $usuario_repositorio->addMultimedia($multimedia_repositorio);
             $em->persist($multimedia_repositorio);
             $em->persist($usuario_repositorio);
-            
+
             $em->flush();
+
+            return new Response(null);
         }
     }
 }
