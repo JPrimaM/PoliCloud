@@ -166,13 +166,26 @@
         </div>
         </div>
     </header>
-{#     <pre>
-    {{ dump(imagen) }}
-    </pre> #}
+
     <main class="b-base">
         <div class="container bg-white py-3">
             {% block cuerpo %}{% endblock %}
-            {{ sugerencias.sugerencias }}
+            {#
+                Esto es porque si se visualiza un contenido del usuario logeado no aparece la foto de este usuario en la publicación
+                entonces para que se visualice se envía desde aquí ya que está cargado para el header :)
+            #}
+            
+            
+            {% if is_granted('ROLE_RESIDENTE') %}
+                {% if imagen == 0 %}
+                    {{ sugerencias.sugerencias }}
+                {% else %}
+                    {{ sugerencias.sugerencias(imagen) }}
+                    {# {{ dump(imagen) }} #}
+                {% endif %}
+            {% else %}
+                {{ sugerencias.sugerencias }}
+            {% endif %}
         </div>
     </main>
 
@@ -195,7 +208,7 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <h3> {% if imagen == 0 %}
+            <h3> {% if imagen == 10 %}
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                     class="bi bi-person-circle" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -230,23 +243,18 @@
 
                         <div class="col-6">
                             <div class="input-group mb-3">
-                                <!-- <input type="file" class="form-control" id="inputGroupFile01"> -->
                                 {{ form_widget(form.archivo, { 'attr': { 'type':'file', 'class':'mb-2 form-control',
                                 'id':'inputGroupFile01' }}) }}
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="input-group mb-3">
-                                <!-- <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-default" placeholder="Nombre de tu imagen..."> -->
                                 {{ form_widget(form.nombre, { 'attr': { 'class':'mb-2 form-control',
-                                'placeholder':'Nombre de la publicación' }}) }}
+                                'placeholder':'Nombre de la publicación', 'required': true }}) }}
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="input-group">
-                                <!-- <textarea class="form-control" aria-label="descripción"
-                                    placeholder="Descripción de la imagen..."></textarea> -->
                                 {{ form_widget(form.descripcion, { 'attr': { 'class':'mb-2 form-control',
                                 'placeholder':'Agrega una descripción...' }}) }}
                             </div>
@@ -269,7 +277,7 @@
     {% block javascripts %}
     <script type="text/javascript" src="{{ asset('lib/jquery-3.6.0.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
-    <script src="{{ asset('build/js/funciones.js') }}"></script>
+    {# <script src="{{ asset('/scripts/funciones.js') }}"></script> #}
     {% endblock %}
 
 

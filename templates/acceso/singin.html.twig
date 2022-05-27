@@ -10,7 +10,7 @@
                 {{ form_widget(form.apodo, { 'attr': { 'class':'mb-2 form-control', 'placeholder':'Apodo' }}) }}
                 {{ form_widget(form.password, { 'attr': { 'class':'mb-2 form-control', 'placeholder':'Contraseña' }}) }}
                 {{ form_widget(form.password2, { 'attr': { 'class':'mb-2 form-control', 'placeholder':'Repite la contraseña' }}) }}
-                {{ form_widget(form.imagen, { 'attr': { 'type':'file', 'class':'mb-2 form-control', 'id':'inputGroupFile01' }}) }}
+                {{ form_widget(form.imagen, { 'attr': { 'type':'file', 'class':'mb-2 form-control', 'id':'inputGroupFile01', 'required': true }}) }}
                 {{ form_widget(form.submit, { 'attr': { 'class':'mb-2 btn btn-primary' }}) }}
                 {{ form_end(form) }}
             </div>

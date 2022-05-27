@@ -3,7 +3,9 @@
 namespace App\Service;
 
 use App\Entity\Multimedia;
+use App\Entity\Usuario;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use phpDocumentor\Reflection\Types\Callable_;
 use PhpParser\Node\Stmt\Foreach_;
 use Twig\Extension\AbstractExtension;
@@ -21,7 +23,7 @@ class SugerenciasService extends AbstractExtension
 
     public function sugerenciasAleatorias()
     {
-        $cantidad = 3;
+        $cantidad = 5;
         $repositorioMultimedia = $this->em->getRepository(Multimedia::class);
 
         $idsMultimedia = $repositorioMultimedia->createQueryBuilder('multimedia')
@@ -33,9 +35,9 @@ class SugerenciasService extends AbstractExtension
         $aleatoriosImagenMultimedia = $repositorioMultimedia
             ->createQueryBuilder('multimedia')
             ->andWhere('multimedia.id IN (:ids)')
-            ->andWhere('multimedia.formato IN (:png)')
+            ->andWhere('multimedia.formato IN (:jpg)')
             ->setParameter('ids', $idsMultimedia)
-            ->setParameter('png', 'png')
+            ->setParameter('jpg', 'jpg')
             ->getQuery()
             ->getResult();
 
@@ -53,15 +55,21 @@ class SugerenciasService extends AbstractExtension
 
 
                 /* Coger foto del usuario de la publicacion para mostrarla en el modal */
-                /* $aux2 = base64_encode(stream_get_contents($aleatoriosImagen->getUsuario()->getImagen(), -1, -1));
-                $aleatoriosImagen->getUsuario()->setImagen($aux2); */
 
+                try {   // En caso de que el usuario tenga la imagen null no salta error
+                    if($aleatoriosImagen->getUsuario()->getImagen()) {
+                        $aleatoriosImagen->getUsuario()->setImagen(base64_encode(stream_get_contents($aleatoriosImagen->getUsuario()->getImagen(), -1, -1)));
+                    }
+                } catch(Exception $e) {
+                    
+                }                
                 array_push($barajaImagenMultimedia, $aleatoriosImagen);
             }
             $contador++;
         }
-
-
+ 
+        //var_dump(base64_encode(stream_get_contents($aleatoriosImagenMultimedia[0]->getUsuario()->getImagen(), -1, -1)));
+        //var_dump($aux);
 
         return [
             new TwigFunction('sugeridos_imagen', [$this, ($barajaImagenMultimedia)])
