@@ -11,6 +11,7 @@ use App\Entity\Usuario;
 use App\Entity\Multimedia;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\Length;
 
 class AjaxController extends AbstractController
 {
@@ -32,7 +33,7 @@ class AjaxController extends AbstractController
         $usuario = $this->security->getUser();
 
         if ($usuario) {
-            
+
             $idMultimedia = $request->query->get("multimedia_id");
 
             try {
@@ -40,15 +41,52 @@ class AjaxController extends AbstractController
                 $multimedia_repositorio = $em->getRepository(Multimedia::class)->findOneBy(array("id" => $idMultimedia));
                 $usuario_repositorio = $em->getRepository(Usuario::class)->findOneBy(array("email" => $usuario->getUserIdentifier()));
                 $multimedia_repositorio->addUsuario($usuario_repositorio);
-
-                /* Suma +1 a los Likes de la Multimedia seleccionada */
-                $likesMultimedia = $multimedia_repositorio->getLikes();
-                $multimedia_repositorio->setLikes($likesMultimedia + 1);
-
                 $em->persist($multimedia_repositorio);
                 $em->flush();
-            } catch (Exception $e) {
+
+                /* Cuanta los Usuarios con LIKE a esta Multimedia y lo asigna a la columna Likes de Multimedia */                
+                $multimedia_repositorio->setLikes(count($multimedia_repositorio->getUsuarios()));
+                $em->persist($multimedia_repositorio);
+                $em->flush();
                 
+
+            } catch (Exception $e) {
+
+            }
+
+
+            return new Response(null);
+        }
+    }
+
+
+    /**
+     * @Route("quitar-like", name="app_quitarLike")
+     */
+    public function quitarLike(Request $request, EntityManagerInterface $em)
+    {
+        $usuario = $this->security->getUser();
+
+        if ($usuario) {
+
+            $idMultimedia = $request->query->get("multimedia_id");
+
+            try {
+                /* Relaciona al Usuario con la Multimedia seleccionada */
+                $multimedia_repositorio = $em->getRepository(Multimedia::class)->findOneBy(array("id" => $idMultimedia));
+                $usuario_repositorio = $em->getRepository(Usuario::class)->findOneBy(array("email" => $usuario->getUserIdentifier()));
+                $multimedia_repositorio->removeUsuario($usuario_repositorio);
+                $em->persist($multimedia_repositorio);
+                $em->flush();
+
+                /* Cuanta los Usuarios con LIKE a esta Multimedia y lo asigna a la columna Likes de Multimedia */                
+                $multimedia_repositorio->setLikes(count($multimedia_repositorio->getUsuarios()));
+                $em->persist($multimedia_repositorio);
+                $em->flush();
+                
+
+            } catch (Exception $e) {
+
             }
 
 
