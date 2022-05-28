@@ -240,10 +240,17 @@
                 </div>
                 <div class="modal-body">
                     {{ form_start(form) }}
-                    <p class="text-muted">Escoge la imagen que quieras compartir y dale una descripción.</p>
+                    <p class="text-muted">Escoge el contenido que quieras compartir y dale una categoría y una descripción.</p>
                     <div class="row">
-
                         <div class="col-6">
+                            <p class="mb-1">Portada:</p>
+                            <div class="input-group mb-3">
+                                {{ form_widget(form.portada, { 'attr': { 'type':'file', 'class':'mb-2 form-control',
+                                'id':'inputGroupFile01' }}) }}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p class="mb-1">Publicación:</p>
                             <div class="input-group mb-3">
                                 {{ form_widget(form.archivo, { 'attr': { 'type':'file', 'class':'mb-2 form-control',
                                 'id':'inputGroupFile01' }}) }}
@@ -252,7 +259,13 @@
                         <div class="col-6">
                             <div class="input-group mb-3">
                                 {{ form_widget(form.nombre, { 'attr': { 'class':'mb-2 form-control',
-                                'placeholder':'Nombre de la publicación', 'required': true }}) }}
+                                'placeholder':'Nombre de la publicación' }}) }}
+                            </div>
+                        </div>
+                         <div class="col-6">
+                            <div class="input-group mb-3">
+                                {{ form_widget(form.categoria, { 'attr': { 'class':'mb-2 form-control',
+                                'placeholder':'Categoría' }}) }}
                             </div>
                         </div>
                         <div class="col-12">
@@ -273,8 +286,6 @@
     </div>
     <!-- FIN MODAL SUBIR IMAGEN -->
     {% endif %}
-
-
 
     {% block javascripts %}
     <script type="text/javascript" src="{{ asset('lib/jquery-3.6.0.min.js') }}"></script>

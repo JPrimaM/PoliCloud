@@ -54,6 +54,16 @@ class Multimedia
      */
     private $usuario;
 
+    /**
+     * @ORM\Column(type="blob")
+     */
+    private $portada;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $categoria;
+
     public function __construct()
     {
         $this->usuarios = new ArrayCollection();
@@ -162,4 +172,30 @@ class Multimedia
 
         return $this;
     }
+
+    public function getPortada()
+    {
+        return $this->portada;
+    }
+
+    public function setPortada($portada): self
+    {
+        $this->portada = $portada;
+
+        return $this;
+    }
+
+    public function getCategoria(): ?string
+    {
+        return $this->categoria;
+    }
+
+    public function setCategoria(string $categoria): self
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+
 }

@@ -17,11 +17,19 @@ class PublicarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('portada', FileType::class, array(
+                "required" => false
+            ))
             ->add('archivo', FileType::class, array(
                 "required" => true
             ))
             ->add('nombre')
-            ->add('descripcion')
+            ->add('categoria', TextType::class, array(
+                "required" => false
+            ))
+            ->add('descripcion', TextType::class, array(
+                "required" => false
+            ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Publicar'
             ));;

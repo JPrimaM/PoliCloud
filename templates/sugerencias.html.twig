@@ -22,17 +22,18 @@
                         </svg>
                     </a>
                 </div>
-
+                {# TARJETA IMAGEN #}
                 {% for contador, multimedia in sugeridos_imagen.sugerenciasImagenAleatorias[0].callable[1] %}
                 <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4 visor">
-                            <a type="button" class="m-0 p-0" data-bs-toggle="modal"
-                                data-bs-target="#modalVerImagen{{ multimedia.id }}">
-                                <img src="data:image/png;base64,{{ multimedia.archivo }}" alt="IMAGEN" class="img-fluid rounded-start">
+                                <a type="button" class="m-0 p-0" data-bs-toggle="modal"
+                                    data-bs-target="#modalVerImagen{{ multimedia.id }}">
+                                    <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="IMAGEN" class="img-fluid rounded-start">
                                 </a>
                             </div>
+                            {# {{ dump(multimedia) }} #}
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
                                     <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
@@ -74,17 +75,16 @@
                         </div>
                     </div>
                 </div>
-{#              {{ dump(multimedia.usuario) }} 
+                {# FIN TARJETA IMAGEN #}
+                {# {{ dump(multimedia.usuario) }} 
                 {{ dump(multimedia.usuario) }}  #}
 
-    
                 {# MODAL IMAGEN #}
                 <div class="modal fade" id="modalVerImagen{{ multimedia.id }}" tabindex="-1" aria-labelledby="modalVerImagenLabel{{ multimedia.id }}" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modalVerImagenLabel{{ multimedia.id }}">
-
                                 {% if multimedia.usuario.imagen %}
                                     <img src="data:image/png;base64,{{ multimedia.usuario.imagen }}" alt="mdo" width="28" height="28"
                                             class="rounded-circle">                                    
@@ -121,6 +121,9 @@
                 {# FIN MODAL IMAGEN #}
                 {% endfor %}
             </div>
+
+
+            {# PRINCIPIO MUSICA #}
             <div class="col-4 px-5">
                 <div class="mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
@@ -132,32 +135,106 @@
                         </svg>
                     </a>
                 </div>
+                {# TARJETA MUSICA #}
                 {% for contador, multimedia in sugeridos_musica.sugerenciasMusicaAleatorias[0].callable[1] %}
-                    {# {% for multimedia in sugeridos_musica.sugerenciasAleatorias[1].callable[1] %}
-                    <div class="col">
-                        <div class="card mb-3" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start"
-                                        alt="Video destacado 1">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body p-2 text-start">
-                                        <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
-                                        <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
-                                        <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null
-                                            %}{{ multimedia.likes }}{% else %}0{% endif %}</p>
-                                    </div>
+                <div class="col">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4 visor">
+                                <a type="button" class="m-0 p-0" data-bs-toggle="modal"
+                                    data-bs-target="#modalVerMusica{{ multimedia.id }}">
+                                    <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="MUSICA" class="img-fluid rounded-start">
+                                </a>
+                            </div>
+                            {# {{ dump(multimedia) }} #}
+                            <div class="col-md-8">
+                                <div class="card-body p-2 text-start">
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                    <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>
+                                        
+                                        
+                                        {% if likes == "" %} {# En caso de que no haya usuario logged #}
+                                            <a onclick="darLike(this)" id="{{ multimedia.id }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star p-0 m-0 btn link-primary" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                </svg>
+                                            </a>
+                                        {% else %} {# Si está dentro... #}
+                                            {% set break = false %}
+                                            {% for like in likes %} {# ...comprueba que las IDs de LIKES (Colecciones Multimedia y Usuario) coincidan con la Multimedia cargada y el Usuario logged y asigna "like" si es así #}
+                                                {% if like.id == multimedia.id and like.usuario.id == multimedia.usuario.id %}
+                                                    <a onclick="darLike(this)" id="{{ multimedia.id }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill link-primary" viewBox="0 0 16 16">
+                                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                        </svg>
+                                                    </a>
+                                                    {% set break = true %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if break == false %} {# ...en caso de no encontrar ninguná coincidencia asigna "no-like" #}
+                                                <a onclick="darLike(this)" id="{{ multimedia.id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star p-0 m-0 btn link-primary" viewBox="0 0 16 16">
+                                                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                    </svg>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    
+                                        {# {{ dump(likes[contador]) }} #}
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                    </div> #}
-                    <audio controls>
-                        <source src="data:image/mp3;base64,{{ multimedia.archivo }}" type="audio/mpeg">
-                        Your browser does not support the video tag.
-                    </audio>
+                    </div>
+                </div>
+
+                {# MODAL MUSICA #}
+                <div class="modal fade" id="modalVerMusica{{ multimedia.id }}" tabindex="-1" aria-labelledby="modalVerMusicaLabel{{ multimedia.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalVerMusicaLabel{{ multimedia.id }}">
+                                {% if multimedia.usuario.imagen %}
+                                    <img src="data:image/png;base64,{{ multimedia.usuario.imagen }}" alt="mdo" width="28" height="28"
+                                            class="rounded-circle">                                    
+                                {% else %}
+                                    {% if multimedia.usuario.imagen == null %}
+                                        <img src="data:image/png;base64,{{ imagen }}" alt="mdo" width="28" height="28"
+                                            class="rounded-circle">
+                                    {% else %}
+                                        
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                            class="bi bi-person-circle" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                            <path fill-rule="evenodd"
+                                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                        </svg>
+                                    {% endif %}
+                                {% endif %}
+                                {{ multimedia.usuario.apodo }}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="MUSICA" class="img-fluid rounded-start mb-3">
+                                <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                <p class="fsize-15 mb-0 ms-2">{{ multimedia.descripcion }}</p>
+                                <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}
+                            </div>
+                            <audio controls>
+                                <source src="data:image/mp3;base64,{{ multimedia.archivo }}" type="audio/mpeg">
+                                Your browser does not support the video tag.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                {# FIN MODAL MUSICA #}
                 {% endfor %}
             </div>
+            {# FIN MUSICA #}
+
+
             <div class="col-4 px-5">
                 <div class="mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
@@ -196,39 +273,56 @@
         </div>
     </div>
 
+    {# TOAST ERROR LIKE #}
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill text-primary" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <strong class="me-auto ms-2">No has iniciado sesión.</strong>
+                <small class="text-primary">PoliCloud</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Debes iniciar sesión para dar Like a las publicaciones.
+                <a type="button" class="btn d-flex justify-content-center btn-header btn-primary py-1 fs-6 mt-2" data-bs-toggle="modal"
+                        data-bs-target="#modalLogin">
+                        Iniciar sesión
+                </a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ asset('lib/jquery-3.6.0.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    {# FIN TOAST ERROR LIKE #}
+</div>
+
     <script>
 		function darLike(elemento) {
-/*            var data = new FormData();
-            data.append("multimedia_id", elemento.id);
-
-            console.log(elemento.id)
-
-            fetch("/dar-like", {
-                method: "POST",
-                body: data
-
-            }).then(function (data) {
-                elemento.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star p-0 m-0 btn link-primary" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/></svg>'
-            }).catch(function (err) {
-                elemento.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill p-0 m-0 btn link-primary" viewBox="0 0 16 16"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>'
-                console.log('error:' + err);
-            });
-            };
- */
-            if (elemento.id.length == 0) {
-                
-                return;
+            const url = 'dar-like/?multimedia_id='+elemento.id;
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.responseType = 'json';
+            xhr.onload = () => {
+            if (xhr.status !== 200) {
+                errorToast();
             } else {
-                const xmlhttp = new XMLHttpRequest();
-                xmlhttp.onload = function() {
-                    console.log(elemento);
-                    
-                    elemento.innerHTML = '\<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill link-primary" viewBox="0 0 16 16"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>';
-                }
-            xmlhttp.open("GET", "dar-like?multimedia_id="+elemento.id);
-            xmlhttp.send();
-            
+                elemento.innerHTML = '\<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill link-primary" viewBox="0 0 16 16"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>';
+                console.log(xhr.response);
             }
+            }
+            xhr.onerror = () => console.log('There was a network error. Check your internet connection and try again.');
+            xhr.send();
+        }
+
+        /* En caso de no estar logged salta el aviso mediante toast */
+        function errorToast() {
+            var toastTrigger = document.getElementById('errorToastBtn');
+            var toastLiveExample = document.getElementById('errorToast');
+            var toast = new bootstrap.Toast(toastLiveExample)
+
+            toast.show();
         }
 
 	</script>

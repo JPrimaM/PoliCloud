@@ -53,6 +53,8 @@ class SugerenciasService extends AbstractExtension
                 $aux = base64_encode(stream_get_contents($aleatoriosImagen->getArchivo(), -1, -1));
                 $aleatoriosImagen->setArchivo($aux);
 
+                $aux2 = base64_encode(stream_get_contents($aleatoriosImagen->getPortada(), -1, -1));
+                $aleatoriosImagen->setPortada($aux2);
 
                 /* Coger foto del usuario de la publicacion para mostrarla en el modal */
                 try {   // En caso de que el usuario tenga la imagen null no salta error
@@ -109,6 +111,9 @@ class SugerenciasService extends AbstractExtension
             } else {
                 $aux = base64_encode(stream_get_contents($aleatoriosMusica->getArchivo(), -1, -1));
                 $aleatoriosMusica->setArchivo($aux);
+
+                $aux2 = base64_encode(stream_get_contents($aleatoriosMusica->getPortada(), -1, -1));
+                $aleatoriosMusica->setPortada($aux2);
 
 
                 /* Coger foto del usuario de la publicacion para mostrarla en el modal */

@@ -32,11 +32,8 @@ class AjaxController extends AbstractController
         $usuario = $this->security->getUser();
 
         if ($usuario) {
-
-            //Recoger GET
+            
             $idMultimedia = $request->query->get("multimedia_id");
-            //var_dump("GET:".$var);
-            //$idMultimedia = $_GET["multimedia_id"];
 
             try {
                 /* Relaciona al Usuario con la Multimedia seleccionada */

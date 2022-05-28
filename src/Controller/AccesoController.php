@@ -54,11 +54,16 @@ class AccesoController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $portada = $form->get("portada")->getData();
+                $archivo = $form->get("archivo")->getData();
 
-                if ($archivo = $form->get("archivo")->getData()) {
+                if ($archivo && $portada) {
+
+                    $multimedia->setPortada(file_get_contents($portada));
 
                     $multimedia->setArchivo(file_get_contents($archivo));
                     $multimedia->setFormato($archivo->guessExtension());
+
                     $multimedia->setUsuario($usuario_repositorio);
                 }
 
@@ -116,33 +121,56 @@ class AccesoController extends AbstractController
             $usuario = new Usuario();
             $form = $this->createForm(SinginType::class, $usuario);
             $form->handleRequest($request);
+            $pass_coinciden = true;
+            $email_libre = true;
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $a = ['ROLE_RESIDENTE'];
                 $usuario->setRoles($a);
-                $hashedPassword = $passwordHasher->hashPassword(
-                    $usuario,
-                    $form->get('password')->getData()
-                );
-                $usuario->setPassword($hashedPassword);
-                if ($imagen = $form->get("imagen")->getData()) {
-                    $usuario->setImagen(file_get_contents($imagen));
+                if($form->get('password')->getData() == $form->get('password2')->getData()) {
+                    $hashedPassword = $passwordHasher->hashPassword(
+                        $usuario,
+                        $form->get('password')->getData()
+                    );
+                    $usuario->setPassword($hashedPassword);
+    
+                    if ($imagen = $form->get("imagen")->getData()) {
+                        $usuario->setImagen(file_get_contents($imagen));
+                    }
+    
+                    try {
+                        $em->persist($usuario);
+                        $em->flush();
+                    } catch (\Exception $e) {
+                        $email_libre = false; /* En caso de que el email ya esté en uso */
+                        return $this->render('./acceso/singin.html.twig', [
+                            'controller_name' => 'SinginController',
+                            'form' => $form->createView(),
+                            'nuevo' => 'nuevo',
+                            'pass_coinciden' => $pass_coinciden,
+                            'email_libre' => $email_libre
+                        ]);
+                    }
+                    return $this->redirectToRoute('app_inicio');
                 }
-
-                try {
-                    $em->persist($usuario);
-                    $em->flush();
-                } catch (\Exception $e) {
-                    return new Response("Esto no va, no no no.");
-                }
-                return $this->redirectToRoute('app_inicio');
+                $pass_coinciden = false; /* En caso de que las contraseñas no coincidan */
+                return $this->render('./acceso/singin.html.twig', [
+                    'controller_name' => 'SinginController',
+                    'form' => $form->createView(),
+                    'nuevo' => 'nuevo',
+                    'pass_coinciden' => $pass_coinciden,
+                    'email_libre' => $email_libre
+                ]);
             }
+            /* Render por defecto, primera vez dentro */
             return $this->render('./acceso/singin.html.twig', [
                 'controller_name' => 'SinginController',
                 'form' => $form->createView(),
-                'nuevo' => "nuevo"
+                'nuevo' => "nuevo",
+                'pass_coinciden' => true,
+                'email_libre' => true
             ]);
-        } else {
+        } else { /* Todo OK, usuario registrado */
             return $this->redirectToRoute('app_inicio');
         }
     }
