@@ -44,14 +44,16 @@ class AjaxController extends AbstractController
                 $em->persist($multimedia_repositorio);
                 $em->flush();
 
-                /* Cuanta los Usuarios con LIKE a esta Multimedia y lo asigna a la columna Likes de Multimedia */                
+                /* Cuanta los Usuarios con LIKE a esta Multimedia y lo asigna a la columna Likes de Multimedia */
                 $multimedia_repositorio->setLikes(count($multimedia_repositorio->getUsuarios()));
                 $em->persist($multimedia_repositorio);
                 $em->flush();
+
+                $json = json_encode(count($multimedia_repositorio->getUsuarios()));
+                header('Content-Type: application/json');
+                echo $json;
                 
-
             } catch (Exception $e) {
-
             }
 
 
@@ -79,14 +81,16 @@ class AjaxController extends AbstractController
                 $em->persist($multimedia_repositorio);
                 $em->flush();
 
-                /* Cuanta los Usuarios con LIKE a esta Multimedia y lo asigna a la columna Likes de Multimedia */                
+                /* Cuanta los Usuarios con LIKE a esta Multimedia y lo asigna a la columna Likes de Multimedia */
                 $multimedia_repositorio->setLikes(count($multimedia_repositorio->getUsuarios()));
                 $em->persist($multimedia_repositorio);
                 $em->flush();
-                
+
+                $json = json_encode(count($multimedia_repositorio->getUsuarios()));
+                header('Content-Type: application/json');
+                echo $json;
 
             } catch (Exception $e) {
-
             }
 
 
