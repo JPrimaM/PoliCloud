@@ -40,6 +40,11 @@ class AccesoController extends AbstractController
         if ($usuario) {
             $rol = $usuario->getRoles();
             $apodo = $usuario->getApodo();
+            $likes = $usuario->getGetLikes();
+
+            if(!$likes) {
+                $likesStr = serialize($likes);
+            }
 
             if ($usuario->getImagen()) {
                 $imagen = base64_encode(stream_get_contents($usuario->getImagen(), -1, -1));
@@ -76,6 +81,7 @@ class AccesoController extends AbstractController
                     'rol' => $rol[0],
                     'apodo' => $apodo,
                     'imagen' => $imagen,
+                    'likes' => $likes,
                     'form' => $form->createView()
                 ]);
             }

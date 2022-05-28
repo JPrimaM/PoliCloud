@@ -37,14 +37,17 @@ class AjaxController extends AbstractController
             //var_dump("GET:".$var);
             //$idMultimedia = $_GET["multimedia_id"];
 
+            /* Relaciona al Usuario con la Multimedia seleccionada */
             $multimedia_repositorio = $em->getRepository(Multimedia::class)->findOneBy(array("id" => $idMultimedia));
             $usuario_repositorio = $em->getRepository(Usuario::class)->findOneBy(array("email" => $usuario->getUserIdentifier()));
-
             $multimedia_repositorio->addUsuario($usuario_repositorio);
-            $usuario_repositorio->addMultimedia($multimedia_repositorio);
-            $em->persist($multimedia_repositorio);
-            $em->persist($usuario_repositorio);
 
+            /* Suma +1 a los Likes de la Multimedia seleccionada */
+            $likesMultimedia = $multimedia_repositorio->getLikes();
+            $multimedia_repositorio->setLikes($likesMultimedia+1);
+
+
+            $em->persist($multimedia_repositorio);
             $em->flush();
 
             return new Response(null);

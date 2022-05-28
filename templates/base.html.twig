@@ -177,11 +177,13 @@
             
             
             {% if is_granted('ROLE_RESIDENTE') %}
-                {% if imagen == 0 %}
-                    {{ sugerencias.sugerencias }}
-                {% else %}
-                    {{ sugerencias.sugerencias(imagen) }}
-                    {# {{ dump(imagen) }} #}
+                {% if likes %}
+                    {{ sugerencias.sugerencias(imagen, likes) }}
+                {# {% else %}
+                    {% set likes = 0 %}
+                    {{ sugerencias.sugerencias(imagen, likes) }} #}
+                        {# {{ dump(likes[0]) }}
+                        {{ dump(likes[1]) }} #}
                 {% endif %}
             {% else %}
                 {{ sugerencias.sugerencias }}
