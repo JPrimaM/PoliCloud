@@ -3,6 +3,7 @@ twig:
     globals:
         sugeridos_imagen: '@App\Service\SugerenciasService'
         sugeridos_musica: '@App\Service\SugerenciasService'
+        sugeridos_video: '@App\Service\SugerenciasService'
 
 when@test:
     twig:

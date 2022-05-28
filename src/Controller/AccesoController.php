@@ -42,10 +42,6 @@ class AccesoController extends AbstractController
             $apodo = $usuario->getApodo();
             $likes = $usuario->getGetLikes();
 
-            if(!$likes) {
-                $likesStr = serialize($likes);
-            }
-
             if ($usuario->getImagen()) {
                 $imagen = base64_encode(stream_get_contents($usuario->getImagen(), -1, -1));
             } else {

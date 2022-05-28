@@ -1,5 +1,5 @@
 {# {% macro sugerencias(imagen) %} #}
-{% macro sugerencias(imagen, likes) %}
+{% macro sugerencias(imagen, likes) %} {# Imagen es la del Usuario logged #}
 
 <div class="row px-0 ">
 
@@ -23,7 +23,7 @@
                     </a>
                 </div>
 
-                {% for contador, multimedia in sugeridos_imagen.sugerenciasAleatorias[0].callable[1] %}
+                {% for contador, multimedia in sugeridos_imagen.sugerenciasImagenAleatorias[0].callable[1] %}
                 <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
@@ -112,6 +112,9 @@
                                 <p class="fsize-15 mb-0 ms-2">{{ multimedia.descripcion }}</p>
                                 <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}
                             </div>
+                            {# <video src="data:image/mp4;base64,{{ multimedia.archivo }}" controls  width="720" height="480">
+                                Tu navegador no soporta el elemento video.
+                            </video> #}
                         </div>
                     </div>
                 </div>
@@ -129,26 +132,31 @@
                         </svg>
                     </a>
                 </div>
-                {# {% for multimedia in sugeridos_musica.sugerenciasAleatorias[1].callable[1] %}
-                <div class="col">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start"
-                                    alt="Video destacado 1">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
-                                    <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null
-                                        %}{{ multimedia.likes }}{% else %}0{% endif %}</p>
+                {% for contador, multimedia in sugeridos_musica.sugerenciasMusicaAleatorias[0].callable[1] %}
+                    {# {% for multimedia in sugeridos_musica.sugerenciasAleatorias[1].callable[1] %}
+                    <div class="col">
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start"
+                                        alt="Video destacado 1">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-2 text-start">
+                                        <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
+                                        <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                        <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null
+                                            %}{{ multimedia.likes }}{% else %}0{% endif %}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                {% endfor %} #}
+                    </div> #}
+                    <audio controls>
+                        <source src="data:image/mp3;base64,{{ multimedia.archivo }}" type="audio/mpeg">
+                        Your browser does not support the video tag.
+                    </audio>
+                {% endfor %}
             </div>
             <div class="col-4 px-5">
                 <div class="mb-3">
@@ -161,23 +169,29 @@
                         </svg>
                     </a>
                 </div>
-                {# <div class="col">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start"
-                                    alt="Video destacado 1">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">NomArtista
-                                    <p class="fsize-15 mb-0 ms-2">NomCanción</p>
-                                    <p class="fsize-15 mb-0 me-2 text-end text-muted">15</p>
+                {% for contador, multimedia in sugeridos_video.sugerenciasVideoAleatorias[0].callable[1] %}
+                    {# <div class="col">
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start"
+                                        alt="Video destacado 1">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-2 text-start">
+                                        <p class="fsize-15 mb-0 ms-2">NomArtista
+                                        <p class="fsize-15 mb-0 ms-2">NomCanción</p>
+                                        <p class="fsize-15 mb-0 me-2 text-end text-muted">15</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div> #}
+                    </div> #}
+                        <video width="320" height="240" controls replay>
+                            <source src="data:image/mp4;base64,{{ multimedia.archivo }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endfor %}
             </div>
         </div>
     </div>
