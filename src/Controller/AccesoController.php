@@ -53,37 +53,65 @@ class AccesoController extends AbstractController
             $form = $this->createForm(PublicarType::class, $multimedia);
             $form->handleRequest($request);
 
+            $formato_portada_valido = true;
+            $formato_archivo_valido = true;
+
             if ($form->isSubmitted() && $form->isValid()) {
                 $portada = $form->get("portada")->getData();
                 $archivo = $form->get("archivo")->getData();
 
                 if ($archivo && $portada) {
 
-                    $multimedia->setPortada(file_get_contents($portada));
+                    $formato_portada = $portada->guessExtension();
+                    $formato_archivo = $archivo->guessExtension();
+                    
+                    $formatos = array("jpg", "mp3", "mp4");
 
-                    $multimedia->setArchivo(file_get_contents($archivo));
-                    $multimedia->setFormato($archivo->guessExtension());
+                    if($formato_portada == "jpg") {
+                        if(in_array($formato_archivo, $formatos)) {
 
-                    $multimedia->setUsuario($usuario_repositorio);
+                            $multimedia->setPortada(file_get_contents($portada));
+                                        
+                            $multimedia->setArchivo(file_get_contents($archivo));
+                            $multimedia->setFormato($archivo->guessExtension());
+        
+                            $multimedia->setUsuario($usuario_repositorio);
+
+                            try {
+                                $em->persist($multimedia);
+                                $em->flush();
+                            } catch (\Exception $e) {
+                                return new Response("Esto no va, no no no.");
+                            }
+                            return $this->redirectToRoute('app_inicio');
+                        } else {
+                            $formato_archivo_valido = false; /* En caso de que el archivo no tenga formato .jpg, .mp3, .mp4 */
+                        }
+                    } else {
+                        $formato_portada_valido = false; /* En caso de que la portada no tenga formato .jpg */
+                    }
+                    if (in_array('ROLE_RESIDENTE', $rol)) {
+                        return $this->render('acceso/inicio.html.twig', [
+                            'rol' => $rol[0],
+                            'apodo' => $apodo,
+                            'imagen' => $imagen,
+                            'likes' => $likes,
+                            'form' => $form->createView(),
+                            'formato_portada_valido' => $formato_portada_valido,
+                            'formato_archivo_valido' => $formato_archivo_valido
+                        ]);
+                    }
                 }
-
-                try {
-                    $em->persist($multimedia);
-                    $em->flush();
-                } catch (\Exception $e) {
-                    return new Response("Esto no va, no no no.".$e);
-                }
-                return $this->redirectToRoute('app_inicio');
             }
-
-            
             if (in_array('ROLE_RESIDENTE', $rol)) {
                 return $this->render('acceso/inicio.html.twig', [
                     'rol' => $rol[0],
                     'apodo' => $apodo,
                     'imagen' => $imagen,
                     'likes' => $likes,
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
+                    'formato_portada_valido' => $formato_portada_valido,
+                    'formato_archivo_valido' => $formato_archivo_valido
                 ]);
             }
         }
@@ -152,15 +180,16 @@ class AccesoController extends AbstractController
                         ]);
                     }
                     return $this->redirectToRoute('app_inicio');
+                } else {
+                    $pass_coinciden = false; /* En caso de que las contraseñas no coincidan */
+                    return $this->render('./acceso/singin.html.twig', [
+                        'controller_name' => 'SinginController',
+                        'form' => $form->createView(),
+                        'nuevo' => 'nuevo',
+                        'pass_coinciden' => $pass_coinciden,
+                        'email_libre' => $email_libre
+                    ]);
                 }
-                $pass_coinciden = false; /* En caso de que las contraseñas no coincidan */
-                return $this->render('./acceso/singin.html.twig', [
-                    'controller_name' => 'SinginController',
-                    'form' => $form->createView(),
-                    'nuevo' => 'nuevo',
-                    'pass_coinciden' => $pass_coinciden,
-                    'email_libre' => $email_libre
-                ]);
             }
             /* Render por defecto, primera vez dentro */
             return $this->render('./acceso/singin.html.twig', [

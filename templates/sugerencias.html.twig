@@ -37,7 +37,7 @@
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
                                     <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                    <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
                                     <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>
                                         
                                         
@@ -86,11 +86,11 @@
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modalVerImagenLabel{{ multimedia.id }}">
                                 {% if multimedia.usuario.imagen %}
-                                    <img src="data:image/png;base64,{{ multimedia.usuario.imagen }}" alt="mdo" width="28" height="28"
+                                    <img src="data:image/jpg;base64,{{ multimedia.usuario.imagen }}" alt="mdo" width="28" height="28"
                                             class="rounded-circle">                                    
                                 {% else %}
                                     {% if multimedia.usuario.imagen == null %}
-                                        <img src="data:image/png;base64,{{ imagen }}" alt="mdo" width="28" height="28"
+                                        <img src="data:image/jpg;base64,{{ imagen }}" alt="mdo" width="28" height="28"
                                             class="rounded-circle">
                                     {% else %}
                                         
@@ -107,14 +107,11 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <img src="data:image/png;base64,{{ multimedia.archivo }}" alt="IMAGEN" class="img-fluid rounded-start mb-3">
+                                <img src="data:image/jpg;base64,{{ multimedia.archivo }}" alt="IMAGEN" class="img-fluid rounded-start mb-3">
                                 <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
                                 <p class="fsize-15 mb-0 ms-2">{{ multimedia.descripcion }}</p>
                                 <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}
                             </div>
-                            {# <video src="data:image/mp4;base64,{{ multimedia.archivo }}" controls  width="720" height="480">
-                                Tu navegador no soporta el elemento video.
-                            </video> #}
                         </div>
                     </div>
                 </div>
@@ -150,7 +147,7 @@
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
                                     <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                    <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
                                     <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>
                                         
                                         
@@ -196,14 +193,13 @@
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modalVerMusicaLabel{{ multimedia.id }}">
                                 {% if multimedia.usuario.imagen %}
-                                    <img src="data:image/png;base64,{{ multimedia.usuario.imagen }}" alt="mdo" width="28" height="28"
+                                    <img src="data:image/jpg;base64,{{ multimedia.usuario.imagen }}" alt="mdo" width="28" height="28"
                                             class="rounded-circle">                                    
                                 {% else %}
                                     {% if multimedia.usuario.imagen == null %}
-                                        <img src="data:image/png;base64,{{ imagen }}" alt="mdo" width="28" height="28"
+                                        <img src="data:image/jpg;base64,{{ imagen }}" alt="mdo" width="28" height="28"
                                             class="rounded-circle">
                                     {% else %}
-                                        
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                             class="bi bi-person-circle" viewBox="0 0 16 16">
                                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -217,15 +213,14 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="MUSICA" class="img-fluid rounded-start mb-3">
+                                <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="MUSICA" style="width:300px;height:300px;" class="img-fluid rounded-start mb-3 me-2">
+                                <audio controls>
+                                    <source src="data:image/mp3;base64,{{ multimedia.archivo }}" type="audio/mpeg" class="ms-2">
+                                </audio>
                                 <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
                                 <p class="fsize-15 mb-0 ms-2">{{ multimedia.descripcion }}</p>
                                 <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}
                             </div>
-                            <audio controls>
-                                <source src="data:image/mp3;base64,{{ multimedia.archivo }}" type="audio/mpeg">
-                                Your browser does not support the video tag.
-                            </audio>
                         </div>
                     </div>
                 </div>
@@ -247,28 +242,99 @@
                     </a>
                 </div>
                 {% for contador, multimedia in sugeridos_video.sugerenciasVideoAleatorias[0].callable[1] %}
-                    {# <div class="col">
-                        <div class="card mb-3" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="{{ asset('img/video/modelo_astro.gif') }}" class="img-fluid rounded-start"
-                                        alt="Video destacado 1">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body p-2 text-start">
-                                        <p class="fsize-15 mb-0 ms-2">NomArtista
-                                        <p class="fsize-15 mb-0 ms-2">NomCanción</p>
-                                        <p class="fsize-15 mb-0 me-2 text-end text-muted">15</p>
-                                    </div>
+                    {# TARJETA VIDEO #}
+                <div class="col">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4 visor">
+                                <a type="button" class="m-0 p-0" data-bs-toggle="modal"
+                                    data-bs-target="#modalVerVideo{{ multimedia.id }}">
+                                    <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="VIDEO" class="img-fluid rounded-start">
+                                </a>
+                            </div>
+                            {# {{ dump(multimedia) }} #}
+                            <div class="col-md-8">
+                                <div class="card-body p-2 text-start">
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
+                                    <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                    <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>
+                                        
+                                        
+                                        {% if likes == "" %} {# En caso de que no haya usuario logged #}
+                                            <a onclick="darLike(this)" id="{{ multimedia.id }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star p-0 m-0 btn link-primary" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                </svg>
+                                            </a>
+                                        {% else %} {# Si está dentro... #}
+                                            {% set break = false %}
+                                            {% for like in likes %} {# ...comprueba que las IDs de LIKES (Colecciones Multimedia y Usuario) coincidan con la Multimedia cargada y el Usuario logged y asigna "like" si es así #}
+                                                {% if like.id == multimedia.id and like.usuario.id == multimedia.usuario.id %}
+                                                    <a onclick="quitarLike(this)" id="{{ multimedia.id }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill link-primary" viewBox="0 0 16 16">
+                                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                        </svg>
+                                                    </a>
+                                                    {% set break = true %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if break == false %} {# ...en caso de no encontrar ninguná coincidencia asigna "no-like" #}
+                                                <a onclick="darLike(this)" id="{{ multimedia.id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star p-0 m-0 btn link-primary" viewBox="0 0 16 16">
+                                                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                    </svg>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    
+                                        {# {{ dump(likes[contador]) }} #}
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                    </div> #}
-                        <video width="320" height="240" controls replay>
-                            <source src="data:image/mp4;base64,{{ multimedia.archivo }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    {% endfor %}
+                    </div>
+                </div>
+                {# FIN TARJETA VIDEO #}
+                {# MODEL VIDEO #}
+                         <div class="modal fade" id="modalVerVideo{{ multimedia.id }}" tabindex="-1" aria-labelledby="modalVerVideoLabel{{ multimedia.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalVerVideoLabel{{ multimedia.id }}">
+                                    {% if multimedia.usuario.imagen %}
+                                        <img src="data:image/jpg;base64,{{ multimedia.usuario.imagen }}" alt="mdo" width="28" height="28"
+                                                class="rounded-circle">                                    
+                                    {% else %}
+                                        {% if multimedia.usuario.imagen == null %}
+                                            <img src="data:image/jpg;base64,{{ imagen }}" alt="mdo" width="28" height="28"
+                                                class="rounded-circle">
+                                        {% else %}
+                                            
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                                class="bi bi-person-circle" viewBox="0 0 16 16">
+                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                            </svg>
+                                        {% endif %}
+                                    {% endif %}
+                                    {{ multimedia.usuario.apodo }}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <video width="640" height="360" controls replay>
+                                        <source src="data:image/mp4;base64,{{ multimedia.archivo }}" type="video/mp4">
+                                    </video>
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.descripcion }}</p>
+                                    <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {# FIN MODAL VIDEO #}
+                {% endfor %}
             </div>
         </div>
     </div>

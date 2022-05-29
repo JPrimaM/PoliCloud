@@ -79,7 +79,7 @@ class SugerenciasService extends AbstractExtension
 
 
 
-    /* AUDIO */
+    /* MUSICA */
     public function sugerenciasMusicaAleatorias()
     {
         $cantidad = 5;
@@ -170,6 +170,9 @@ class SugerenciasService extends AbstractExtension
             } else {
                 $aux = base64_encode(stream_get_contents($aleatoriosVideo->getArchivo(), -1, -1));
                 $aleatoriosVideo->setArchivo($aux);
+
+                $aux2 = base64_encode(stream_get_contents($aleatoriosVideo->getPortada(), -1, -1));
+                $aleatoriosVideo->setPortada($aux2);
 
 
                 /* Coger foto del usuario de la publicacion para mostrarla en el modal */

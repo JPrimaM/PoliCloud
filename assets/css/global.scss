@@ -109,9 +109,17 @@ body {
 .fsize-15 {
     font-size: 15px;
 }
+.fsize-13 {
+    font-size: 13px;
+}
 
 .text-decoration-none {
     text-decoration: none;
+}
+
+.centrar-item {
+    display: flex;
+    align-items: center;
 }
 
 

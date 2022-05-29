@@ -18,12 +18,14 @@ class PublicarType extends AbstractType
     {
         $builder
             ->add('portada', FileType::class, array(
-                "required" => false
+                "required" => true
             ))
             ->add('archivo', FileType::class, array(
                 "required" => true
             ))
-            ->add('nombre')
+            ->add('nombre', TextType::class, array(
+                "required" => true
+            ))
             ->add('categoria', TextType::class, array(
                 "required" => false
             ))
