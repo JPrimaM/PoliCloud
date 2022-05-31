@@ -2,8 +2,14 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         sugeridos_imagen: '@App\Service\SugerenciasService'
+        sugeridos_perfil_imagen: '@App\Service\SugerenciasService'
+        sugeridos_portada_imagen: '@App\Service\SugerenciasService'
         sugeridos_musica: '@App\Service\SugerenciasService'
+        sugeridos_perfil_musica: '@App\Service\SugerenciasService'
+        sugeridos_portada_musica: '@App\Service\SugerenciasService'
         sugeridos_video: '@App\Service\SugerenciasService'
+        sugeridos_perfil_video: '@App\Service\SugerenciasService'
+        sugeridos_portada_video: '@App\Service\SugerenciasService'
 
 when@test:
     twig:

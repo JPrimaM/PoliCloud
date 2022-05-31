@@ -97,4 +97,38 @@ class AjaxController extends AbstractController
             return new Response(null);
         }
     }
+
+    /**
+     * @Route("eliminar-publicacion", name="app_eliminarPublicacion")
+     */
+    public function eliminarPublicacion(Request $request, EntityManagerInterface $em)
+    {
+        $usuario = $this->security->getUser();
+
+        if ($usuario) {
+
+            $idMultimedia = $request->query->get("multimedia_id");
+
+            try {
+                /* Relaciona al Usuario con la Multimedia seleccionada */
+                $multimedia_repositorio = $em->getRepository(Multimedia::class)->findOneBy(array("id" => $idMultimedia));
+                $usuario_repositorio = $em->getRepository(Usuario::class)->findOneBy(array("email" => $usuario->getUserIdentifier()));
+
+                if($multimedia_repositorio->getUsuario()->getId() == $usuario_repositorio->getId()) {
+                    $em->remove($multimedia_repositorio);
+                    $em->flush();
+                    
+                    //$json = json_encode(count($multimedia_repositorio->getUsuarios()));
+                    header('Content-Type: application/json');
+                    //echo $json;
+                }
+               
+
+            } catch (Exception $e) {
+            }
+
+
+            return new Response(null);
+        }
+    }
 }

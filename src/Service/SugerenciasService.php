@@ -7,7 +7,6 @@ use App\Entity\Usuario;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use phpDocumentor\Reflection\Types\Callable_;
-use PhpParser\Node\Stmt\Foreach_;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -23,7 +22,7 @@ class SugerenciasService extends AbstractExtension
 
     public function sugerenciasImagenAleatorias()
     {
-        $cantidad = 5;
+        $cantidad = 3;
         $repositorioMultimedia = $this->em->getRepository(Multimedia::class);
 
         $idsMultimedia = $repositorioMultimedia->createQueryBuilder('multimedia')
@@ -44,7 +43,9 @@ class SugerenciasService extends AbstractExtension
 
         shuffle($aleatoriosImagenMultimedia);
 
-        $barajaImagenMultimedia = [];
+        $portadasImagen = array();
+        $perfilImagen = array();
+        $barajaImagenMultimedia = array();
         $contador = 0;
         foreach ($aleatoriosImagenMultimedia as $aleatoriosImagen) {
             if ($contador == $cantidad) {
@@ -54,17 +55,31 @@ class SugerenciasService extends AbstractExtension
                 $aleatoriosImagen->setArchivo($aux);
 
                 $aux2 = base64_encode(stream_get_contents($aleatoriosImagen->getPortada(), -1, -1));
-                $aleatoriosImagen->setPortada($aux2);
+                if($aux2 != "") {
+                    $aleatoriosImagen->setPortada($aux2);
 
-                /* Coger foto del usuario de la publicacion para mostrarla en el modal */
-                try {   // En caso de que el usuario tenga la imagen null no salta error
-                    if($aleatoriosImagen->getUsuario()->getImagen()) {
-                        $aleatoriosImagen->getUsuario()->setImagen(base64_encode(stream_get_contents($aleatoriosImagen->getUsuario()->getImagen(), -1, -1)));
-                    }
-                } catch(Exception $e) {
+                    array_push($portadasImagen, $aux2); // Se almacena y se globaliza para que en caso de que el usaurio consulte su propio 
+                                                        // contenido se puedan incorporar las imagenes, ya que de normal elimina el contenido de la portada
                     
-                }                
-                array_push($barajaImagenMultimedia, $aleatoriosImagen);
+    
+                    /* Coger foto del usuario de la publicacion para mostrarla en el modal */
+                    try {   // En caso de que el usuario tenga la imagen null no salta error
+                        if($aleatoriosImagen->getUsuario()->getImagen()) {
+                            $aux3 = base64_encode(stream_get_contents($aleatoriosImagen->getUsuario()->getImagen(), -1, -1));
+                            $aleatoriosImagen->getUsuario()->setImagen($aux3);
+    
+                            array_push($perfilImagen, $aux3);   // Se almacena y se globaliza para que en caso de que el usaurio consulte su propio 
+                                                                // contenido se puedan incorporar las imagenes, ya que de normal elimina el contenido del perfil
+                        }
+                    } catch(Exception $e) {
+                        
+                    }                
+                    array_push($barajaImagenMultimedia, $aleatoriosImagen);
+                } else {
+                    $contador--;
+                    
+                }
+                
             }
             $contador++;
         }
@@ -73,7 +88,9 @@ class SugerenciasService extends AbstractExtension
         //var_dump($aux);
 
         return [
-            new TwigFunction('sugeridos_imagen', [$this, ($barajaImagenMultimedia)])
+            new TwigFunction('sugeridos_imagen', [$this, ($barajaImagenMultimedia)]),
+            new TwigFunction('sugeridos_perfil_imagen', [$this, ($aleatoriosImagenMultimedia)]),
+            new TwigFunction('sugeridos_portada_imagen', [$this, ($portadasImagen)])
         ];
     }
 
@@ -82,7 +99,7 @@ class SugerenciasService extends AbstractExtension
     /* MUSICA */
     public function sugerenciasMusicaAleatorias()
     {
-        $cantidad = 5;
+        $cantidad = 3;
         $repositorioMultimedia = $this->em->getRepository(Multimedia::class);
 
         $idsMultimedia = $repositorioMultimedia->createQueryBuilder('multimedia')
@@ -141,7 +158,7 @@ class SugerenciasService extends AbstractExtension
     /* VIDEO */
     public function sugerenciasVideoAleatorias()
     {
-        $cantidad = 5;
+        $cantidad = 3;
         $repositorioMultimedia = $this->em->getRepository(Multimedia::class);
 
         $idsMultimedia = $repositorioMultimedia->createQueryBuilder('multimedia')

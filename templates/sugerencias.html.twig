@@ -1,5 +1,5 @@
 {# {% macro sugerencias(imagen) %} #}
-{% macro sugerencias(imagen, likes) %} {# Imagen es la del Usuario logged #}
+{% macro sugerencias(imagen, likes, id, portadas_multimedia_perfil) %} {# Imagen es la del Usuario logged #}
 
 <div class="row px-0 ">
 
@@ -24,7 +24,7 @@
                 </div>
                 {# TARJETA IMAGEN #}
                 {% for contador, multimedia in sugeridos_imagen.sugerenciasImagenAleatorias[0].callable[1] %}
-                <div class="col">
+                <div class="col col-sm-12">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4 visor">
@@ -33,13 +33,12 @@
                                     <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="IMAGEN" class="img-fluid rounded-start">
                                 </a>
                             </div>
-                            {# {{ dump(multimedia) }} #}
+                             {# {{ dump(multimedia) }}  #}
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
                                     <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
                                     <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
                                     <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>
-                                        
                                         
                                         {% if likes == "" %} {# En caso de que no haya usuario logged #}
                                             <a onclick="darLike(this)" id="{{ multimedia.id }}">
@@ -90,7 +89,7 @@
                                             class="rounded-circle">                                    
                                 {% else %}
                                     {% if multimedia.usuario.imagen == null %}
-                                        <img src="data:image/jpg;base64,{{ imagen }}" alt="mdo" width="28" height="28"
+                                        <img src="data:image/jpg;base64,{{ imagen }}" alt="mdos" width="28" height="28"
                                             class="rounded-circle">
                                     {% else %}
                                         
@@ -140,7 +139,11 @@
                             <div class="col-md-4 visor">
                                 <a type="button" class="m-0 p-0" data-bs-toggle="modal"
                                     data-bs-target="#modalVerMusica{{ multimedia.id }}">
+                                    {# {{ dump(multimedia.usuario.id)}}
+                                    {{ dump(id)}} #}
                                     <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="MUSICA" class="img-fluid rounded-start">
+                                    
+                                    
                                 </a>
                             </div>
                             {# {{ dump(multimedia) }} #}
@@ -366,7 +369,7 @@
 
     <script>
 		function darLike(elemento) {
-            const url = 'dar-like/?multimedia_id='+elemento.id;
+            const url = '/dar-like/?multimedia_id='+elemento.id;
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url);
             xhr.responseType = 'json';
@@ -396,7 +399,7 @@
 
     <script>
 		function quitarLike(elemento) {
-            const url = 'quitar-like/?multimedia_id='+elemento.id;
+            const url = '/quitar-like/?multimedia_id='+elemento.id;
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url);
             xhr.responseType = 'json';

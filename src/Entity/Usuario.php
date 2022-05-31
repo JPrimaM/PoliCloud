@@ -57,6 +57,11 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $multimedia;
 
+    public function __toString()
+    {
+        return $this->id;
+    }
+
     public function __construct()
     {
         $this->getLikes = new ArrayCollection();
@@ -156,7 +161,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->imagen;
     }
-    
+
     public function setImagen($imagen): self
     {
         $this->imagen = $imagen;
