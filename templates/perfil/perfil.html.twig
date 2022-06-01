@@ -1,40 +1,25 @@
 {% extends 'base.html.twig' %}
 {% block cuerpo %}
 
-<style>
-    .img-perfil {
-        width: 40%;
-        height: 40%;
-    }
-
-</style>
-
-    {# PerfilController, dedicadas para el perfil
-    imagen_perfil
-    multimedia_perfil
-    portadas_multimedia_perfil
-     #}
-
 <div class="row d-flex justify-content-center">
     <div class="col-3 m-0 d-flex justify-content-end">
-        <img src="data:image/jpg;base64,{{ imagen_perfil }}" alt="mdo" class="rounded img-perfil">
+        <img src="data:image/jpg;base64,{{ imagen_perfil }}" alt="mdo" class="rounded max-contenido">
     </div>
     <div class="col-8 ms-2">
         <h1 class="fs-1">{{ perfil_repositorio.apodo }}</h1>
-        <p class="mb-0">{{ perfil_repositorio.apodo }} / {{ apodo }}</p>
+        <p class="mb-0">Perfil de usuario</p>
     </div>
 </div>
 
 <hr class="text-primary">
 
-<div class="row px-0 ">
+<div class="row px-0 justify-content-center">
 {% for contador, multimedia in multimedia_perfil %}
-    <div class="col-6">
+    <div class="col-5" id="tarjeta_{{ multimedia.id }}">
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
                 <div class="col-md-4 visor">
-                    <a type="button" class="m-0 p-0" data-bs-toggle="modal"
-                        data-bs-target="#modalVerMusica{{ multimedia.id }}">
+                    <a type="button" class="m-0 p-0" href="{{ path('app_publicacion', {'idPerfil':multimedia.usuario.id, 'idPublicacion':multimedia.id}) }}">
                         <img src="data:image/jpg;base64,{{ portadas_multimedia_perfil[contador] }}" alt="MUSICA" class="img-fluid rounded-start">
                     </a>
                 </div>
@@ -43,9 +28,8 @@
                     <div class="card-body p-2 text-start">
                         <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
                         <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
-                        <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>
-                            
-                            
+                        <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>    
+
                             {% if likes == "" %} {# En caso de que no haya usuario logged #}
                                 <a onclick="darLike(this)" id="{{ multimedia.id }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star p-0 m-0 btn link-primary" viewBox="0 0 16 16">
@@ -72,16 +56,76 @@
                                     </a>
                                 {% endif %}
                             {% endif %}
-                        
                             {# {{ dump(likes[contador]) }} #}
+                            {% if multimedia.usuario.id == id %}
+                                <a onclick="eliminarPublicacion(this, tarjeta_{{ multimedia.id }})" id="{{ multimedia.id }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash link-gray ms-2" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
                         </p>
                     </div>
                 </div>
+        
             </div>
         </div>
     </div>
+    {# TOAST ELIMINAR PUBLICACIÓN #}
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="eliminadaToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill text-primary" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <strong class="me-auto ms-2">Publicación eliminada.</strong>
+                <small class="text-primary">PoliCloud</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Has eliminado <strong>{{ multimedia.nombre }}</strong>.
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ asset('lib/jquery-3.6.0.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    {# FIN TOAST ELIMINAR PUBLICACIÓN #}
 {% endfor %}
 </div>
+
+<script>
+    function eliminarPublicacion(elemento, tarjeta) {
+        const url = '/eliminar-publicacion/?multimedia_id='+elemento.id;
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.responseType = 'json';
+        xhr.onload = () => {
+        if (xhr.status !== 200) {
+            errorToast();
+        } else {
+            tarjeta = document.getElementById(tarjeta.id);
+            tarjeta.remove();
+            eliminadaToast();
+            
+        }
+        }
+        xhr.onerror = () => console.log('There was a network error. Check your internet connection and try again.');
+        xhr.send();
+    }
+
+    /* En caso de que se elimine exitosamente */
+    function eliminadaToast() {
+        var toastTrigger = document.getElementById('eliminadaToastBtn');
+        var toastLiveExample = document.getElementById('eliminadaToast');
+        var toast = new bootstrap.Toast(toastLiveExample)
+
+        toast.show();
+    }
+</script>
+
+<hr class="text-primary">
+
 
 {# {{ dump(multimedia_perfil) }} #}
 

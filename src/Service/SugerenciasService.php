@@ -130,18 +130,23 @@ class SugerenciasService extends AbstractExtension
                 $aleatoriosMusica->setArchivo($aux);
 
                 $aux2 = base64_encode(stream_get_contents($aleatoriosMusica->getPortada(), -1, -1));
-                $aleatoriosMusica->setPortada($aux2);
+                if($aux2 != "") {
+                    $aleatoriosMusica->setPortada($aux2);
 
 
-                /* Coger foto del usuario de la publicacion para mostrarla en el modal */
-                try {   // En caso de que el usuario tenga la Imagen null no salta error
-                    if($aleatoriosMusica->getUsuario()->getImagen()) {
-                        $aleatoriosMusica->getUsuario()->setImagen(base64_encode(stream_get_contents($aleatoriosMusica->getUsuario()->getImagen(), -1, -1)));
-                    }
-                } catch(Exception $e) {
+                    /* Coger foto del usuario de la publicacion para mostrarla en el modal */
+                    try {   // En caso de que el usuario tenga la Imagen null no salta error
+                        if($aleatoriosMusica->getUsuario()->getImagen()) {
+                            $aleatoriosMusica->getUsuario()->setImagen(base64_encode(stream_get_contents($aleatoriosMusica->getUsuario()->getImagen(), -1, -1)));
+                        }
+                    } catch(Exception $e) {
+                        
+                    }                
+                    array_push($barajaMusicaMultimedia, $aleatoriosMusica);
+                } else {
+                    $contador--;
                     
-                }                
-                array_push($barajaMusicaMultimedia, $aleatoriosMusica);
+                }
             }
             $contador++;
         }
@@ -189,6 +194,7 @@ class SugerenciasService extends AbstractExtension
                 $aleatoriosVideo->setArchivo($aux);
 
                 $aux2 = base64_encode(stream_get_contents($aleatoriosVideo->getPortada(), -1, -1));
+                if($aux2 != "") {
                 $aleatoriosVideo->setPortada($aux2);
 
 
@@ -201,6 +207,10 @@ class SugerenciasService extends AbstractExtension
                     
                 }                
                 array_push($barajaVideoMultimedia, $aleatoriosVideo);
+                } else {
+                    $contador--;
+                    
+                }
             }
             $contador++;
         }

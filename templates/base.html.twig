@@ -24,7 +24,7 @@
                             <a href="{{ path('app_inicio') }}" id="prueba"
                                 class="prueba text-primary text-decoration-none">PoliCloud</a>
                         </div>
-                        <div class="col-6">
+                        {# <div class="col-6">
                             <!-- Button trigger modal BUSCAR -->
                             <button type="button" class="btn d-flex align-items-center btn-header"
                                 data-bs-toggle="modal" data-bs-target="#modalBuscar">
@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> #}
                     </div>
 
                 </div>
@@ -147,8 +147,7 @@
                                     data-bs-target="#modalSubirImagen">
                                     Publicar contenido
                                 </a></li>
-                            <li><a class="dropdown-item" href="#">Ajustes</a></li>
-                            <li><a class="dropdown-item" href="#">Ver perfil</a></li>
+                            <li><a class="dropdown-item"  href="{{ path('app_perfil', {idPerfil:id}) }}">Mi perfil</a></li>
                         </ul>
                     </div>
                     <a href="{{ path('app_logout') }}" type="button" class="btn d-flex align-items-center btn-header">
@@ -195,7 +194,7 @@
         <hr class="m-0 mb-3">
         <div class="row">
             <div class="col text-center">
-                PoliCloud (Proyecto TFG) - Javier Prima Margiotta
+                PoliCloud (Proyecto PFC) - Javier Prima Margiotta
             </div>
         </div>
     </footer>

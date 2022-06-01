@@ -36,7 +36,7 @@
                              {# {{ dump(multimedia) }}  #}
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
+                                    <a class="fsize-15 mb-0 ms-2 text-decoration-none" href="{{ path('app_perfil', {idPerfil:multimedia.usuario.id}) }}">{{ multimedia.usuario.apodo }}</a>
                                     <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
                                     <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>
                                         
@@ -106,8 +106,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <img src="data:image/jpg;base64,{{ multimedia.archivo }}" alt="IMAGEN" class="img-fluid rounded-start mb-3">
+                                <img src="data:image/jpg;base64,{{ multimedia.archivo }}" alt="IMAGEN" class="img-fluid rounded mb-3">
                                 <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                <p class="fsize-15 text-muted mb-2 ms-2">{{ multimedia.categoria }}</p>
                                 <p class="fsize-15 mb-0 ms-2">{{ multimedia.descripcion }}</p>
                                 <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}
                             </div>
@@ -149,7 +150,7 @@
                             {# {{ dump(multimedia) }} #}
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
+                                    <a class="fsize-15 mb-0 ms-2 text-decoration-none" href="{{ path('app_perfil', {idPerfil:multimedia.usuario.id}) }}">{{ multimedia.usuario.apodo }}</a>
                                     <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
                                     <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>
                                         
@@ -216,11 +217,12 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="MUSICA" style="width:300px;height:300px;" class="img-fluid rounded-start mb-3 me-2">
+                                <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="MUSICA" style="width:300px;height:300px;" class="img-fluid rounded mb-3 me-2">
                                 <audio controls>
                                     <source src="data:image/mp3;base64,{{ multimedia.archivo }}" type="audio/mpeg" class="ms-2">
                                 </audio>
                                 <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                <p class="fsize-15 text-muted mb-2 ms-2">{{ multimedia.categoria }}</p>
                                 <p class="fsize-15 mb-0 ms-2">{{ multimedia.descripcion }}</p>
                                 <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}
                             </div>
@@ -258,7 +260,7 @@
                             {# {{ dump(multimedia) }} #}
                             <div class="col-md-8">
                                 <div class="card-body p-2 text-start">
-                                    <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
+                                    <a class="fsize-15 mb-0 ms-2 text-decoration-none" href="{{ path('app_perfil', {idPerfil:multimedia.usuario.id}) }}">{{ multimedia.usuario.apodo }}</a>
                                     <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
                                     <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>
                                         
@@ -330,6 +332,7 @@
                                         <source src="data:image/mp4;base64,{{ multimedia.archivo }}" type="video/mp4">
                                     </video>
                                     <p class="fsize-15 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                                    <p class="fsize-15 text-muted mb-2 ms-2">{{ multimedia.categoria }}</p>
                                     <p class="fsize-15 mb-0 ms-2">{{ multimedia.descripcion }}</p>
                                     <p class="fsize-15 mb-0 me-2 text-end text-muted">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}
                                 </div>
