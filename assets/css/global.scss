@@ -10,6 +10,9 @@ ESTRUCTURA CSS POR ETIQUETA
 - BLOQUE 2: TAMAÑOS
 - BLOQUE 3: AJUSTES
 */
+html {
+    min-width: 576px;
+}
 
 #cardImg {
     border-color: $gris-principal;

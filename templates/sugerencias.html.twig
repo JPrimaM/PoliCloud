@@ -8,10 +8,10 @@
         {{dump(sugeridos_imagen.sugerenciasAleatorias[0].callable[1])}}
 </pre> #}
 
-    <div class="col mt-5">
+    <div class="col-12 mt-5">
         <p><span class="h4 ms-1 me-3">Sugerencias</span>Algunas publicaciones de los usuarios</p>
-        <div class="row text-center">
-            <div class="col-4 px-5">
+        <div class="row text-center d-flex justify-content-center">
+            <div class="col-sm-12 col-md-12 col-lg-4 px-2 px-lg-3 align-items-center">
                 <div class="mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
                         <circle cx="8" cy="8" r="8" />
@@ -24,17 +24,17 @@
                 </div>
                 {# TARJETA IMAGEN #}
                 {% for contador, multimedia in sugeridos_imagen.sugerenciasImagenAleatorias[0].callable[1] %}
-                <div class="col col-sm-12">
+                <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-4 visor">
+                            <div class="col-4 visor">
                                 <a type="button" class="m-0 p-0" data-bs-toggle="modal"
                                     data-bs-target="#modalVerImagen{{ multimedia.id }}">
                                     <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="IMAGEN" class="img-fluid rounded-start">
                                 </a>
                             </div>
                              {# {{ dump(multimedia) }}  #}
-                            <div class="col-md-8">
+                            <div class="col-8">
                                 <div class="card-body p-2 text-start">
                                     <a class="fsize-15 mb-0 ms-2 text-decoration-none" href="{{ path('app_perfil', {idPerfil:multimedia.usuario.id}) }}">{{ multimedia.usuario.apodo }}</a>
                                     <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
@@ -121,7 +121,7 @@
 
 
             {# PRINCIPIO MUSICA #}
-            <div class="col-4 px-5">
+            <div class="col-sm-12 col-lg-4 px-2 px-lg-3">
                 <div class="mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
                         <circle cx="8" cy="8" r="8" />
@@ -137,7 +137,7 @@
                 <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-4 visor">
+                            <div class="col-4 visor">
                                 <a type="button" class="m-0 p-0" data-bs-toggle="modal"
                                     data-bs-target="#modalVerMusica{{ multimedia.id }}">
                                     {# {{ dump(multimedia.usuario.id)}}
@@ -148,7 +148,7 @@
                                 </a>
                             </div>
                             {# {{ dump(multimedia) }} #}
-                            <div class="col-md-8">
+                            <div class="col-8">
                                 <div class="card-body p-2 text-start">
                                     <a class="fsize-15 mb-0 ms-2 text-decoration-none" href="{{ path('app_perfil', {idPerfil:multimedia.usuario.id}) }}">{{ multimedia.usuario.apodo }}</a>
                                     <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
@@ -235,7 +235,7 @@
             {# FIN MUSICA #}
 
 
-            <div class="col-4 px-5">
+            <div class="col-sm-12 col-lg-4 px-2 px-lg-3">
                 <div class="mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="height-20 bi bi-circle-fill text-primary" viewBox="0 0 16 16">
                         <circle cx="8" cy="8" r="8" />
@@ -251,14 +251,14 @@
                 <div class="col">
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
-                            <div class="col-md-4 visor">
+                            <div class="col-4 visor">
                                 <a type="button" class="m-0 p-0" data-bs-toggle="modal"
                                     data-bs-target="#modalVerVideo{{ multimedia.id }}">
                                     <img src="data:image/jpg;base64,{{ multimedia.portada }}" alt="VIDEO" class="img-fluid rounded-start">
                                 </a>
                             </div>
                             {# {{ dump(multimedia) }} #}
-                            <div class="col-md-8">
+                            <div class="col-8">
                                 <div class="card-body p-2 text-start">
                                     <a class="fsize-15 mb-0 ms-2 text-decoration-none" href="{{ path('app_perfil', {idPerfil:multimedia.usuario.id}) }}">{{ multimedia.usuario.apodo }}</a>
                                     <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
