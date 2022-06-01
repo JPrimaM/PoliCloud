@@ -3,41 +3,45 @@
 
 <div class="row">
     <div class="col-12">
-        <div class="row my-1">
-            <div class="col-4 m-0">
-                <div class="card bg-dark text-primary border-1 border-primary mx-1">
-                    {# <a href="{{ path('app_imagen') }}"> #}
-                        <img src="{{ asset('img/imagen/imagen_banner.jpg') }}" class="card-img cards-inicio w-100 h-100"
-                            alt="Imágen">
-                        <div class="card-img-overlay d-flex align-items-start bg-primary-opacity-banner">
-                            <h5 class="card-title text-center w-100 fw-bolder mt-5">IMAGEN</h5>
-                        </div>
-                        {#
-                    </a> #}
+        <div class="row my-1 d-flex justify-content-center">
+{#             <div class="col-9">
+                <div class="card bg-dark text-gray border-1 border-primary mx-1">
+                    <img src="{{ asset('img/banner.jpg') }}" class="card-img w-100 h-100"
+                        alt="Imágen">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title text-center w-100 fs-2 fw-bolder mt-5">BIENVENIDO</h5>
+                        <p class="fs-4">El mejor contenido multimedia libre de copia de derechos compartido por los creadores.</p>
+                        <p class="fs-4">Consulta las imágenes, la música y los vídeos de los usuarios y comparte tu contenido.</p>
+                    </div>
+                </div>
+            </div> #}
+
+
+            <div class="col-3 m-0">
+                <div class="card bg-dark border-1 border-primary mx-1">
+                    <img src="{{ asset('img/imagen/imagen_banner.jpg') }}" class="card-img cards-inicio w-100 h-100"
+                        alt="Imágen">
+                    <div class="card-img-overlay d-flex align-items-start bg-primary-opacity-banner">
+                        <h5 class="card-title text-center text-secondary w-100 fw-bolder mt-5">IMAGEN</h5>
+                    </div>
                 </div>
             </div>
-            <div class="col-4 m-0">
-                <div class="card bg-dark text-primary border-1 border-primary mx-1">
-                    {# <a href="{{ path('app_musica') }}"> #}
-                        <img src="{{ asset('img/imagen/imagen_banner.jpg') }}"
-                            class="card-img cards-inicio w-100 h-100" alt="Música">
-                        <div class="card-img-overlay d-flex align-items-start bg-primary-opacity-banner">
-                            <h5 class="card-title text-center w-100 fw-bolder mt-5">MÚSICA</h5>
-                        </div>
-                        {#
-                    </a> #}
+            <div class="col-3 m-0">
+                <div class="card bg-dark border-1 border-primary mx-1">
+                    <img src="{{ asset('img/imagen/imagen_banner.jpg') }}"
+                        class="card-img cards-inicio w-100 h-100" alt="Música">
+                    <div class="card-img-overlay d-flex align-items-start bg-primary-opacity-banner">
+                        <h5 class="card-title text-center text-dark w-100 fw-bolder mt-5">MÚSICA</h5>
+                    </div>
                 </div>
             </div>
-            <div class="col-4 m-0">
-                <div class="card bg-dark text-primary border-1 border-primary mx-1">
-                    {# <a href="{{ path('app_video') }}"> #}
-                        <img src="{{ asset('img/imagen/imagen_banner.jpg') }}" class="card-img cards-inicio w-100 h-100"
-                            alt="Vídeo">
-                        <div class="card-img-overlay d-flex align-items-start bg-primary-opacity-banner">
-                            <h5 class="card-title text-center w-100 fw-bolder mt-5">VÍDEO</h5>
-                        </div>
-                        {#
-                    </a> #}
+            <div class="col-3 m-0">
+                <div class="card bg-dark border-1 border-primary mx-1">
+                    <img src="{{ asset('img/imagen/imagen_banner.jpg') }}" class="card-img cards-inicio w-100 h-100"
+                        alt="Vídeo">
+                    <div class="card-img-overlay d-flex align-items-start bg-primary-opacity-banner">
+                        <h5 class="card-title text-center text-light w-100 fw-bolder mt-5">VÍDEO</h5>                        
+                    </div>
                 </div>
             </div>
         </div>
