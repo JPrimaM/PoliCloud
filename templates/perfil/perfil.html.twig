@@ -27,7 +27,22 @@
                 <div class="col-md-8">
                     <div class="card-body p-2 text-start">
                         <p class="fsize-15 mb-0 ms-2">{{ multimedia.usuario.apodo }}</p>
-                        <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}</p>
+                        <p class="fsize-13 mb-0 ms-2">{{ multimedia.nombre }}
+                        
+                        {% if multimedia.formato == "jpg" %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill dots-size text-secondary ms-3" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8" />
+                        </svg>
+                        {% elseif multimedia.formato == "mp3" %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill dots-size text-dark ms-3" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8" />
+                        </svg>
+                        {% elseif multimedia.formato == "mp4" %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill dots-size text-light ms-3" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8" />
+                        </svg>
+                        {% endif %}
+                        </p>
                         <p class="fsize-15 mb-0 me-2 text-end text-muted"><span id="numLikes" value="{{ multimedia.likes }}">{% if not multimedia.likes == null %}{{ multimedia.likes }}{% else %}0{% endif %}</span>    
 
                             {% if likes == "" %} {# En caso de que no haya usuario logged #}
@@ -38,7 +53,8 @@
                                 </a>
                             {% else %} {# Si está dentro... #}
                                 {% set break = false %}
-                                {% for like in likes %} {# ...comprueba que las IDs de LIKES (Colecciones Multimedia y Usuario) coincidan con la Multimedia cargada y el Usuario logged y asigna "like" si es así #}
+                                {% for like in likes %} {# ...comprueba que las IDs de LIKES (Colecciones Multimedia y Usuario) coincidan con la Multimedia
+                                                             cargada y el Usuario logged y asigna "like" si es así #}
                                     {% if like.id == multimedia.id and like.usuario.id == multimedia.usuario.id %}
                                         <a onclick="quitarLike(this)" id="{{ multimedia.id }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill link-primary" viewBox="0 0 16 16">

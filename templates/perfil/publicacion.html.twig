@@ -18,10 +18,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="row d-flex justify-content-center">
-                    <div class="col-3">
-                        <p class="fs-3 mb-0 ms-2">{{ publicacion_perfil.nombre }}</p>
-                        <span class="text-muted fsize-15"> de </span><a class="fsize-15 mb-0 text-decoration-none" href="{{ path('app_perfil', {'idPerfil':publicacion_perfil.usuario.id}) }}">{{ publicacion_perfil.usuario.apodo }}</a>
-                        <img src="data:image/jpg;base64,{{ portada_multimedia_perfil }}" alt="IMAGEN" class="img-fluid rounded" style="width:300px;height:300px;">
+                    <div class="{% if publicacion_perfil.formato != 'mp3' %}col-12{% else %}col{% endif %} col-lg-3">
+                        <div class="align-items-center">
+                            <p class="fs-3 mb-0 ms-2 text-center">{{ publicacion_perfil.nombre }}<span class="text-muted fsize-15"> de </span><a class="fsize-15 mb-0 text-decoration-none" href="{{ path('app_perfil', {'idPerfil':publicacion_perfil.usuario.id}) }}">{{ publicacion_perfil.usuario.apodo }}</a></p>
+                            <img src="data:image/jpg;base64,{{ portada_multimedia_perfil }}" alt="IMAGEN" class="rounded d-flex justify-content-center" style="max-width:300px;max-height:300px; margin: auto;">
+                        </div>
                         {% if publicacion_perfil.formato == "mp3" %}
                         <div class="d-flex justify-content-center my-2">
                             <audio controls>
@@ -31,7 +32,7 @@
                         {% endif %}
 
                         <div class="p-2">
-                            <p>{{ publicacion_perfil.descripcion }}</p>
+                            <p class="col-5 col-lg-12  d-flex justify-content-center text-center" style="margin: auto;">{{ publicacion_perfil.descripcion }}</p>
                             <p class="text-muted text-center">{{ publicacion_perfil.categoria }}</p>
                             <div class="text-end">
                                 <span class="fs-4 mb-0 me-2 text-muted"><span id="numLikes" value="{{ publicacion_perfil.likes }}" class="fs-5">{% if not publicacion_perfil.likes == null %}{{ publicacion_perfil.likes }}{% else %}0{% endif %}</span>
@@ -70,11 +71,11 @@
                 
                 
                     {% if publicacion_perfil.formato == "jpg" %}
-                        <div class="col-9 ps-0">
+                        <div class="col-12 col-xxl-9 ps-xxl-0">
                             <img src="data:image/jpg;base64,{{ archivo_multimedia_perfil }}" alt="IMAGEN" class="img-fluid rounded">
                         </div>
                     {% elseif publicacion_perfil.formato == "mp4" %}
-                        <div class="col-9 ps-0">
+                        <div class="col-12 col-xxl-9 ps-xxl-0">
                             <video controls class="img-fluid rounded">
                                 <source src="data:image/mp4;base64,{{ archivo_multimedia_perfil }}" type="video/mp4">
                             </video>

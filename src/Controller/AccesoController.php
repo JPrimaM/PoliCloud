@@ -132,12 +132,12 @@ class AccesoController extends AbstractController
         $usuario = $this->getUser();
         if (!$usuario) {
             return $this->render('acceso/inicio.html.twig', [
-                'error' => $error,
-                'lastUsername' => $lastUsername
+                'error' => $error
             ]);
         } else {
             return $this->redirectToRoute('app_singin');
         }
+        return $this->redirectToRoute('app_perfil');
     }
 
     /**
