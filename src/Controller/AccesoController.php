@@ -34,7 +34,6 @@ class AccesoController extends AbstractController
      */
     public function inicio(Request $request, EntityManagerInterface $em): Response
     {
-
         $usuario = $this->security->getUser();
 
         if ($usuario) {
@@ -82,7 +81,20 @@ class AccesoController extends AbstractController
                                 $em->persist($multimedia);
                                 $em->flush();
                             } catch (\Exception $e) {
-                                return new Response("Esto no va, no no no. Posiblemente haya que modificar el tamaño de paquete en MySQL");
+                                if (in_array('ROLE_RESIDENTE', $rol)) {
+                                    return $this->render('acceso/inicio.html.twig', [
+                                        'rol' => $rol[0],
+                                        'id' => $id,
+                                        'apodo' => $apodo,
+                                        'imagen' => $imagen,
+                                        'likes' => $likes,
+                                        'form' => $form->createView(),
+                                        'formato_portada_valido' => $formato_portada_valido,
+                                        'formato_archivo_valido' => $formato_archivo_valido,
+                                        'size_valido' => false
+                                    ]);
+                                }
+                                //return new Response("Esto no va, no no no. Posiblemente haya que modificar el tamaño de paquete en MySQL");
                             }
                             return $this->redirectToRoute('app_inicio');
                         } else {
@@ -100,7 +112,8 @@ class AccesoController extends AbstractController
                             'likes' => $likes,
                             'form' => $form->createView(),
                             'formato_portada_valido' => $formato_portada_valido,
-                            'formato_archivo_valido' => $formato_archivo_valido
+                            'formato_archivo_valido' => $formato_archivo_valido,
+                            'size_valido' => true
                         ]);
                     }
                 }
@@ -114,7 +127,8 @@ class AccesoController extends AbstractController
                     'likes' => $likes,
                     'form' => $form->createView(),
                     'formato_portada_valido' => $formato_portada_valido,
-                    'formato_archivo_valido' => $formato_archivo_valido
+                    'formato_archivo_valido' => $formato_archivo_valido,
+                    'size_valido' => true
                 ]);
             }
         }
@@ -205,6 +219,7 @@ class AccesoController extends AbstractController
         } else { /* Todo OK, usuario registrado */
             return $this->redirectToRoute('app_inicio');
         }
+        
     }
 
 

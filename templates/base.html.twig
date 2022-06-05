@@ -165,15 +165,26 @@
         </div>
         </div>
     </header>
-
+        
     <main class="b-base">
         <div class="container bg-white py-3">
+            {% if is_granted('ROLE_RESIDENTE') %}
+                {% if not formato_portada_valido or not formato_archivo_valido or not size_valido %}
+                <div class="alert alert-danger " role="alert">
+                    Operación cancelada.
+                    <br>
+                    {% if not size_valido %}<span class="text-primary fsize-15">* La publicaciación pesada demasiado (máximo 128MB)</span>{% endif %}
+                    {% if not formato_portada_valido %}<span class="text-primary fsize-15">* La portada debe de ser .jpg</span>{% endif %}
+                    {% if not formato_archivo_valido %}<span class="text-primary fsize-15">* La publicación debe de ser .jpg, .mp3 o .mp4</span>{% endif %}
+                </div>
+                {% endif %}
+            {% endif %}
+
             {% block cuerpo %}{% endblock %}
             {#
                 Esto es porque si se visualiza un contenido del usuario logeado no aparece la foto de este usuario en la publicación
                 entonces para que se visualice se envía desde aquí ya que está cargado para el header :)
             #}
-            
             
             {% if is_granted('ROLE_RESIDENTE') %}
                 {% if likes %}
@@ -187,6 +198,7 @@
             {% else %}
                 {{ sugerencias.sugerencias }}
             {% endif %}
+            
         </div>
     </main>
 
@@ -228,7 +240,7 @@
         </div>
     </div>
     <!-- FIN LATERAL CANVAS AHORA PARA PRUEBAS (DESUSO) -->
-
+    
     <!-- MODAL SUBIR IMAGEN -->
     <div class="modal fade" id="modalSubirImagen" tabindex="-1" aria-labelledby="modalSubirImagenLabel"
         aria-hidden="true">
@@ -241,8 +253,6 @@
                 <div class="modal-body">
                     {{ form_start(form) }}
                     <p class="text-muted">Escoge el contenido que quieras compartir y dale una categoría y una descripción.</p>
-                    {% if not formato_portada_valido %}<p><span class="text-primary fsize-15">* La portada debe de ser .jpg</span></p>{% endif %}
-                    {% if not formato_archivo_valido %}<p><span class="text-primary fsize-15">* La publicación debe de ser .jpg, .mp3 o .mp4</span></p>{% endif %}
                     <div class="row">
                         <div class="col-6">
                             <p class="mb-1">
@@ -304,7 +314,7 @@
     {# <script src="{{ asset('/scripts/funciones.js') }}"></script> #}
     {% endblock %}
 
-
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
         crossorigin="anonymous"></script>

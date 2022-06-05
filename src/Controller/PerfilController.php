@@ -106,7 +106,25 @@ class PerfilController extends AbstractController
                                 $em->persist($multimedia);
                                 $em->flush();
                             } catch (\Exception $e) {
-                                return new Response("Esto no va nonono. Posiblemente haya que modificar el tamaño de paquete en MySQL/php.ini".$e);
+                                //return new Response("Esto no va nonono. Posiblemente haya que modificar el tamaño de paquete en MySQL/php.ini".$e);
+
+                                if (in_array('ROLE_RESIDENTE', $rol)) {
+                                    return $this->render('perfil/perfil.html.twig', [
+                                        'rol' => $rol[0],
+                                        'id' => $id,
+                                        'apodo' => $apodo,
+                                        'imagen' => $imagen,
+                                        'likes' => $likes,
+                                        'form' => $form->createView(),
+                                        'formato_portada_valido' => $formato_portada_valido,
+                                        'formato_archivo_valido' => $formato_archivo_valido,
+                                        'perfil_repositorio' => $perfil_repositorio,
+                                        'imagen_perfil' => $imagen_perfil,
+                                        'multimedia_perfil' => $multimedia_perfil_repositorio,
+                                        'portadas_multimedia_perfil' => $portadasCodigicadas,
+                                        'size_valido' => false
+                                    ]);
+                                }
                             }
                             return $this->redirectToRoute('app_inicio');
                         } else {
@@ -114,6 +132,24 @@ class PerfilController extends AbstractController
                         }
                     } else {
                         $formato_portada_valido = false; /* En caso de que la portada no tenga formato .jpg */
+                    }
+                    if (in_array('ROLE_RESIDENTE', $rol)) {
+                        return $this->render('perfil/perfil.html.twig', [
+                            'rol' => $rol[0],
+                            'id' => $id,
+                            'apodo' => $apodo,
+                            'imagen' => $imagen,
+                            'likes' => $likes,
+                            'form' => $form->createView(),
+                            'formato_portada_valido' => $formato_portada_valido,
+                            'formato_archivo_valido' => $formato_archivo_valido,
+                            'perfil_repositorio' => $perfil_repositorio,
+                            'imagen_perfil' => $imagen_perfil,
+                            'multimedia_perfil' => $multimedia_perfil_repositorio,
+                            'portadas_multimedia_perfil' => $portadasCodigicadas,
+                            'size_valido' => true
+                            
+                        ]);
                     }
                 }
             }
@@ -130,7 +166,8 @@ class PerfilController extends AbstractController
                     'perfil_repositorio' => $perfil_repositorio,
                     'imagen_perfil' => $imagen_perfil,
                     'multimedia_perfil' => $multimedia_perfil_repositorio,
-                    'portadas_multimedia_perfil' => $portadasCodigicadas
+                    'portadas_multimedia_perfil' => $portadasCodigicadas,
+                    'size_valido' => true
                 ]);
             }
         } else {
@@ -146,7 +183,8 @@ class PerfilController extends AbstractController
                     'perfil_repositorio' => $perfil_repositorio,
                     'imagen_perfil' => $imagen_perfil,
                     'multimedia_perfil' => $multimedia_perfil_repositorio,
-                    'portadas_multimedia_perfil' => $portadasCodigicadas
+                    'portadas_multimedia_perfil' => $portadasCodigicadas,
+                    'size_valido' => true
                 ]);
         }
     }
@@ -224,7 +262,25 @@ class PerfilController extends AbstractController
                                 $em->persist($multimedia);
                                 $em->flush();
                             } catch (\Exception $e) {
-                                return new Response("Esto no va, no no no. Posiblemente haya que modificar el tamaño de paquete en MySQL");
+                                //return new Response("Esto no va, no no no. Posiblemente haya que modificar el tamaño de paquete en MySQL");
+                                if (in_array('ROLE_RESIDENTE', $rol)) {
+                                    return $this->render('perfil/publicacion.html.twig', [
+                                        'rol' => $rol[0],
+                                        'id' => $id,
+                                        'apodo' => $apodo,
+                                        'imagen' => $imagen,
+                                        'likes' => $likes,
+                                        'form' => $form->createView(),
+                                        'formato_portada_valido' => $formato_portada_valido,
+                                        'formato_archivo_valido' => $formato_archivo_valido,
+                                        'perfil_repositorio' => $perfil_repositorio,
+                                        'imagen_perfil' => $imagen_perfil,
+                                        'publicacion_perfil' => $publicacion_perfil_repositorio,
+                                        'portada_multimedia_perfil' => $portadaCodificada,
+                                        'archivo_multimedia_perfil' => $archivoCodificado,
+                                        'size_valido' => false
+                                    ]);
+                                }
                             }
                             return $this->redirectToRoute('app_inicio');
                         } else {
@@ -247,7 +303,8 @@ class PerfilController extends AbstractController
                             'imagen_perfil' => $imagen_perfil,
                             'publicacion_perfil' => $publicacion_perfil_repositorio,
                             'portada_multimedia_perfil' => $portadaCodificada,
-                            'archivo_multimedia_perfil' => $archivoCodificado
+                            'archivo_multimedia_perfil' => $archivoCodificado,
+                            'size_valido' => true
                         ]);
                     }
                 }
@@ -266,7 +323,8 @@ class PerfilController extends AbstractController
                     'imagen_perfil' => $imagen_perfil,
                     'publicacion_perfil' => $publicacion_perfil_repositorio,
                     'portada_multimedia_perfil' => $portadaCodificada,
-                    'archivo_multimedia_perfil' => $archivoCodificado
+                    'archivo_multimedia_perfil' => $archivoCodificado,
+                    'size_valido' => true
                 ]);
             }
         } else {
@@ -283,7 +341,8 @@ class PerfilController extends AbstractController
                     'imagen_perfil' => $imagen_perfil,
                     'publicacion_perfil' => $publicacion_perfil_repositorio,
                     'portada_multimedia_perfil' => $portadaCodificada,
-                    'archivo_multimedia_perfil' => $archivoCodificado
+                    'archivo_multimedia_perfil' => $archivoCodificado,
+                    'size_valido' => true
                 ]);
         }
     }
